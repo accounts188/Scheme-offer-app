@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Scheme Vixen – Live Item Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    :root{
+      --bg:#f6f7fb; --card:#ffffff; --pri:#0f172a; --acc:#2563eb;
+      --soft:#eef2ff; --muted:#64748b; --stroke:#e5e7eb;
+      --hi:#ecfeff; --hi2:#eef2ff; --shadow:0 16px 40px rgba(2,6,23,.08);
+    }
+    *{ box-sizing:border-box; }
+    body{ margin:0; padding:16px; font-family: Inter, system-ui, -apple-system, Segoe UI, Arial;
+      background: linear-gradient(#ffffff, var(--bg)); color:var(--pri); }
+    .wrap{ max-width:1100px; margin:0 auto; }
+    .card{ background:var(--card); border:1px solid var(--stroke); border-radius:18px;
+      box-shadow:var(--shadow); padding:18px; }
+    header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+    h2{ margin:0; font-size:20px; font-weight:800; letter-spacing:.2px; }
+    .brand{ color:#475569; font-weight:700; letter-spacing:.4px; font-size:12px; }
+    .row{ display:grid; grid-template-columns: 1.1fr 1fr 1fr auto; gap:10px; }
+    label{ font-size:11px; color:#64748b; letter-spacing:.5px; text-transform:uppercase; }
+    input, select, button{ width:100%; padding:10px 12px; margin-top:6px;
+      border-radius:10px; border:1px solid var(--stroke); background:#fff; color:var(--pri); font-size:14px; }
+    .tiny{ width:auto; padding:10px 12px; border-radius:10px; background: linear-gradient(180deg, #3b82f6, #2563eb);
+      color:#fff; font-weight:800; cursor:pointer; box-shadow:0 8px 16px rgba(37,99,235,.25); }
+    .result{ margin-top:12px; padding:12px; border:1px solid var(--stroke); border-radius:14px; background:#fff; }
+    .hero{ display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center;
+      padding:12px; border-radius:12px; background: linear-gradient(180deg, var(--hi), var(--hi2));
+      border:1px solid #c7d2fe; margin-bottom:10px; }
+    .item-name{ font-size:18px; font-weight:900; }
+    .dp{ font-size:18px; font-weight:900; color:#1d4ed8; background:#dbeafe; padding:6px 10px; border-radius:10px; }
+    .meta{ font-size:12px; color:var(--muted); }
+
+    /* 🔥 Highlighted Offers */
+    .offers{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    .offer-pill{
+      display:inline-flex; align-items:center; gap:6px;
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:13px;
+      font-weight:900;
+      background: linear-gradient(180deg, #fef3c7, #fde68a);
+      color:#92400e;
+      border:1px solid #f59e0b;
+      box-shadow:0 6px 14px rgba(245,158,11,.35);
+    }
+    .offer-pill strong{ color:#7c2d12; }
+    .offer-title{ font-weight:900; color:#b45309; margin-top:6px; }
+
+    .loading{ padding:10px; border-radius:10px; border:1px dashed var(--stroke); color:var(--muted); }
+
+    /* 📱 Mobile compact layout */
+    @media (max-width: 640px){
+      body{ padding:10px; }
+      .card{ padding:12px; border-radius:14px; }
+      header{ gap:8px; }
+      h2{ font-size:18px; }
+      .brand{ font-size:11px; }
+
+      .row{ grid-template-columns: 1fr; gap:8px; }
+      .tiny{ width:100%; }
+
+      .hero{ grid-template-columns: 1fr; gap:6px; padding:10px; }
+      .item-name{ font-size:16px; }
+      .dp{ font-size:16px; padding:5px 8px; }
+
+      .offers{ gap:6px; }
+      .offer-pill{ padding:6px 10px; font-size:12px; }
+      .offer-title{ font-size:13px; margin-top:4px; }
+
+      .result{ padding:10px; }
+      .meta{ font-size:11px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <header>
+      <h2>📦 Live Item Search</h2>
+      <div class="brand">SCHEME VIXEN</div>
+    </header>
+
+    <div class="row">
+      <div>
+        <label>Code</label>
+        <input type="number" id="codeInput" placeholder="1259" />
+      </div>
+      <div>
+        <label>Name</label>
+        <input type="text" id="nameInput" placeholder="Yoga Mat" />
+      </div>
+      <div>
+        <label>Category</label>
+        <select id="categorySelect" disabled>
+          <option>Loading…</option>
+        </select>
+      </div>
+      <button class="tiny" onclick="window.print()">🖨</button>
+    </div>
+
+    <div id="result" class="result" style="display:none;"></div>
+    <div id="categoryResults" class="result" style="display:none;"></div>
+  </div>
+</div>
+
+<script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbxXFCPney8rGxtPs3KAu1Tuz1oUaDbpn5FGkDChqi5-7rbZbPbJBzUnr3lfLhq6L_iR-A/exec";
+  let sheetData = [];
+
+  const codeInput = document.getElementById("codeInput");
+  const nameInput = document.getElementById("nameInput");
+  const categorySelect = document.getElementById("categorySelect");
+
+  function rupee(val){
+    if (!val) return "-";
+    return String(val).replace(/₹/g, "").trim();
+  }
+
+  let t;
+  codeInput.addEventListener("input", () => { clearTimeout(t); t = setTimeout(autoSearch, 120); });
+  nameInput.addEventListener("input", () => { clearTimeout(t); t = setTimeout(searchByName, 160); });
+  categorySelect.addEventListener("change", searchByCategory);
+
+  fetch(API_URL)
+    .then(r => r.json())
+    .then(data => {
+      sheetData = data || [];
+      fillCategoryDropdown();
+      categorySelect.disabled = false;
+    })
+    .catch(() => { categorySelect.innerHTML = "<option>Error loading</option>"; });
+
+  function fillCategoryDropdown(){
+    const cats = [...new Set(sheetData.map(i => i["CATEGORY"]).filter(Boolean))].sort();
+    categorySelect.innerHTML = '<option value="">All categories</option>';
+    cats.forEach(c => {
+      const o = document.createElement("option");
+      o.value = c; o.textContent = c;
+      categorySelect.appendChild(o);
+    });
+  }
+
+  function renderItem(item){
+    const offers = [];
+    if (item["Qty"] && item["OFFER RATE"]) offers.push({q:item["Qty"], p:item["OFFER RATE"]});
+    if (item["Qty_1"] && item["OFFER RATE_1"]) offers.push({q:item["Qty_1"], p:item["OFFER RATE_1"]});
+    if (item["Qty_2"] && item["OFFER RATE_2"]) offers.push({q:item["Qty_2"], p:item["OFFER RATE_2"]});
+
+    const res = document.getElementById("result");
+    res.style.display = "block";
+    document.getElementById("categoryResults").style.display = "none";
+    res.innerHTML = `
+      <div class="hero">
+        <div>
+          <div class="item-name">${item["ITEM NAME"]}</div>
+          <div class="meta">Code: ${item["CODE"]} • ${item["CATEGORY"]}</div>
+        </div>
+        <div class="dp">₹ ${rupee(item["DP"])}</div>
+      </div>
+      <div class="offer-title">🔥 Special Offers</div>
+      <div class="offers">
+        ${
+          offers.length
+            ? offers.map(o => `<span class="offer-pill">${o.q} pcs → <strong>₹ ${rupee(o.p)}</strong></span>`).join("")
+            : `<span class="meta">No offer</span>`
+        }
+      </div>
+    `;
+  }
+
+  function autoSearch(){
+    const code = codeInput.value.trim();
+    if (!code) return clearAll();
+    const item = sheetData.find(r => String(r["CODE"]) === code);
+    if (!item) return showNotFound();
+    renderItem(item);
+  }
+
+  function searchByName(){
+    const name = nameInput.value.trim().toLowerCase();
+    if (!name) return;
+    const item = sheetData.find(r => (r["ITEM NAME"] || "").toLowerCase().includes(name));
+    if (!item) return showNotFound();
+    codeInput.value = item["CODE"];
+    renderItem(item);
+  }
+
+  function searchByCategory(){
+    const cat = categorySelect.value;
+    const box = document.getElementById("categoryResults");
+    document.getElementById("result").style.display = "none";
+    if (!cat) { box.style.display="none"; return; }
+
+    const items = sheetData.filter(i => i["CATEGORY"] === cat);
+    box.style.display = "block";
+    box.innerHTML = items.length
+      ? items.map(item => {
+          const offers = [];
+          if (item["Qty"] && item["OFFER RATE"]) offers.push({q:item["Qty"], p:item["OFFER RATE"]});
+          if (item["Qty_1"] && item["OFFER RATE_1"]) offers.push({q:item["Qty_1"], p:item["OFFER RATE_1"]});
+          if (item["Qty_2"] && item["OFFER RATE_2"]) offers.push({q:item["Qty_2"], p:item["OFFER RATE_2"]});
+          return `
+            <div class="hero" style="margin-bottom:8px">
+              <div>
+                <div class="item-name">${item["ITEM NAME"]}</div>
+                <div class="meta">Code: ${item["CODE"]}</div>
+              </div>
+              <div class="dp">₹ ${rupee(item["DP"])}</div>
+            </div>
+            <div class="offers">
+              ${offers.map(o => `<span class="offer-pill">${o.q} pcs → <strong>₹ ${rupee(o.p)}</strong></span>`).join("") || `<span class="meta">No offer</span>`}
+            </div>
+          `;
+        }).join("<hr style='border-color:#e5e7eb;margin:10px 0'/>")
+      : `<div class="loading">No items in this category</div>`;
+  }
+
+  function clearAll(){
+    document.getElementById("result").style.display = "none";
+    document.getElementById("categoryResults").style.display = "none";
+  }
+  function showNotFound(){
+    const res = document.getElementById("result");
+    res.style.display = "block";
+    res.innerHTML = `<div class="loading">❌ Item not found</div>`;
+  }
+</script>
+</body>
+</html>
