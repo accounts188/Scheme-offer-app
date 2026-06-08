@@ -157,7 +157,7 @@
       <div class="offers">
         ${
           offers.length
-            ? offers.map(o => `<span class="offer-pill">${o.q} pcs → <strong>₹ ${rupee(o.p)}</strong></span>`).join("")
+            ? offers.map(o => `<span class="offer-pill">${o.q} → <strong>₹ ${rupee(o.p)}</strong></span>`).join("")
             : `<span class="meta">No offer</span>`
         }
       </div>
@@ -206,7 +206,7 @@
               </div>
             </div>
             <div class="offers">
-              ${offers.map(o => `<span class="offer-pill">${o.q} pcs → <strong>₹ ${rupee(o.p)}</strong></span>`).join("") || `<span class="meta">No offer</span>`}
+              ${offers.map(o => `<span class="offer-pill">${o.q} → <strong>₹ ${rupee(o.p)}</strong></span>`).join("") || `<span class="meta">No offer</span>`}
             </div>
           `;
         }).join("<hr style='border-color:#e5e7eb;margin:10px 0'/>")
