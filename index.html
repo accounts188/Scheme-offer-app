@@ -2,21 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Scheme Vixen – Live Item Search</title>
+  <title>BHALLA SPORTS VX VIXEN – Scheme & Offer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <style>
     :root{
-      --bg:#f6f7fb;
-      --card:#ffffff;
-      --pri:#0f172a;
-      --acc:#2563eb;
-      --soft:#eef2ff;
+      --navy:#07152d;
+      --navy2:#0d2347;
+      --blue:#1769ff;
+      --blue2:#0b4edb;
+      --cyan:#06b6d4;
+      --green:#16a34a;
+      --green-bg:#ecfdf3;
+      --orange:#f97316;
+      --orange-bg:#fff7ed;
+      --red:#dc2626;
+      --text:#0f172a;
       --muted:#64748b;
-      --stroke:#e5e7eb;
-      --hi:#ecfeff;
-      --hi2:#eef2ff;
-      --shadow:0 16px 40px rgba(2,6,23,.08);
+      --border:#dbe3ef;
+      --bg:#f4f7fb;
+      --white:#ffffff;
+      --shadow:0 12px 35px rgba(15,23,42,.10);
     }
 
     *{
@@ -25,193 +31,617 @@
 
     body{
       margin:0;
-      padding:16px;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Arial;
-      background:linear-gradient(#ffffff,var(--bg));
-      color:var(--pri);
+      padding:18px;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,
+        "Segoe UI",Arial,sans-serif;
+      background:
+        radial-gradient(circle at top left,#e8f1ff 0,#f4f7fb 35%,#f4f7fb 100%);
+      color:var(--text);
     }
 
     .wrap{
-      max-width:1100px;
+      max-width:1120px;
       margin:0 auto;
     }
 
-    .card{
-      background:var(--card);
-      border:1px solid var(--stroke);
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      padding:18px;
+    /* ================= HEADER ================= */
+
+    .topbar{
+      background:linear-gradient(135deg,var(--navy),var(--navy2));
+      border-radius:20px;
+      padding:18px 22px;
+      color:#fff;
+      box-shadow:0 15px 35px rgba(7,21,45,.20);
+      margin-bottom:14px;
+      position:relative;
+      overflow:hidden;
     }
 
-    header{
+    .topbar:after{
+      content:"";
+      position:absolute;
+      width:220px;
+      height:220px;
+      right:-100px;
+      top:-120px;
+      border-radius:50%;
+      background:rgba(23,105,255,.22);
+    }
+
+    .brand-row{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:12px;
-      margin-bottom:10px;
+      gap:15px;
+      position:relative;
+      z-index:2;
     }
 
-    h2{
-      margin:0;
-      font-size:20px;
+    .brand-left{
+      display:flex;
+      align-items:center;
+      gap:13px;
+    }
+
+    .logo-box{
+      width:48px;
+      height:48px;
+      border-radius:13px;
+      background:linear-gradient(135deg,#1d75ff,#0b4edb);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+      font-weight:950;
+      box-shadow:0 8px 20px rgba(23,105,255,.35);
+      border:1px solid rgba(255,255,255,.2);
+    }
+
+    .brand-main{
+      font-size:18px;
+      font-weight:950;
+      letter-spacing:.5px;
+      line-height:1.1;
+    }
+
+    .brand-sub{
+      font-size:11px;
+      color:#a9c4ef;
+      margin-top:4px;
+      letter-spacing:1.5px;
       font-weight:800;
-      letter-spacing:.2px;
     }
 
-    .brand{
-      color:#475569;
-      font-weight:700;
-      letter-spacing:.4px;
+    .live-badge{
+      background:rgba(34,197,94,.14);
+      color:#86efac;
+      border:1px solid rgba(134,239,172,.28);
+      padding:7px 11px;
+      border-radius:999px;
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.8px;
+    }
+
+    /* ================= MAIN CARD ================= */
+
+    .card{
+      background:rgba(255,255,255,.96);
+      border:1px solid var(--border);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:20px;
+    }
+
+    .page-title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:16px;
+    }
+
+    .title-line{
+      width:5px;
+      height:30px;
+      border-radius:5px;
+      background:linear-gradient(180deg,var(--blue),var(--cyan));
+    }
+
+    .page-title h1{
+      margin:0;
+      font-size:22px;
+      font-weight:950;
+      letter-spacing:-.3px;
+    }
+
+    .page-title p{
+      margin:3px 0 0;
       font-size:12px;
+      color:var(--muted);
+    }
+
+    /* ================= SEARCH ================= */
+
+    .search-panel{
+      background:#f8fafc;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:15px;
     }
 
     .row{
       display:grid;
-      grid-template-columns:1.1fr 1fr 1fr auto;
+      grid-template-columns:1fr 1.25fr 1fr auto;
       gap:10px;
+      align-items:end;
     }
 
     label{
-      font-size:11px;
+      display:block;
+      font-size:10px;
       color:#64748b;
-      letter-spacing:.5px;
+      font-weight:900;
+      letter-spacing:.9px;
       text-transform:uppercase;
+      margin-bottom:5px;
     }
 
     input,
-    select,
-    button{
+    select{
       width:100%;
-      padding:10px 12px;
-      margin-top:6px;
-      border-radius:10px;
-      border:1px solid var(--stroke);
+      height:44px;
+      padding:0 13px;
+      border-radius:11px;
+      border:1px solid #cfd9e7;
       background:#fff;
-      color:var(--pri);
+      color:var(--text);
       font-size:14px;
+      font-weight:650;
+      outline:none;
+      transition:.18s;
     }
 
-    .tiny{
-      width:auto;
-      padding:10px 12px;
-      border-radius:10px;
-      background:linear-gradient(180deg,#3b82f6,#2563eb);
+    input:focus,
+    select:focus{
+      border-color:var(--blue);
+      box-shadow:0 0 0 3px rgba(23,105,255,.10);
+    }
+
+    select:disabled{
+      background:#f1f5f9;
+      color:#94a3b8;
+    }
+
+    .print-btn{
+      height:44px;
+      min-width:48px;
+      padding:0 14px;
+      border:0;
+      border-radius:11px;
+      background:var(--navy);
       color:#fff;
-      font-weight:800;
+      font-size:17px;
+      font-weight:900;
       cursor:pointer;
-      box-shadow:0 8px 16px rgba(37,99,235,.25);
-    }
-
-    .result{
-      margin-top:12px;
-      padding:12px;
-      border:1px solid var(--stroke);
-      border-radius:14px;
-      background:#fff;
-    }
-
-    .hero{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:8px;
-      align-items:center;
-      padding:12px;
-      border-radius:12px;
-      background:linear-gradient(180deg,var(--hi),var(--hi2));
-      border:1px solid #c7d2fe;
-      margin-bottom:10px;
-    }
-
-    .item-name{
-      font-size:18px;
-      font-weight:900;
-    }
-
-    .dp{
-      font-size:18px;
-      font-weight:900;
-      color:#1d4ed8;
-      background:#dbeafe;
-      padding:6px 10px;
-      border-radius:10px;
-    }
-
-    .meta{
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .offers{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:8px;
-    }
-
-    .offer-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      border-radius:999px;
-      padding:8px 12px;
-      font-size:13px;
-      font-weight:900;
-      background:linear-gradient(180deg,#fef3c7,#fde68a);
-      color:#92400e;
-      border:1px solid #f59e0b;
-      box-shadow:0 6px 14px rgba(245,158,11,.35);
-    }
-
-    .offer-pill strong{
-      color:#7c2d12;
-    }
-
-    .offer-title{
-      font-weight:900;
-      color:#b45309;
-      margin-top:6px;
-    }
-
-    .loading{
-      padding:10px;
-      border-radius:10px;
-      border:1px dashed var(--stroke);
-      color:var(--muted);
     }
 
     .status{
+      min-height:18px;
       font-size:11px;
       color:#64748b;
       margin-top:8px;
       text-align:right;
     }
 
-    @media(max-width:640px){
+    /* ================= RESULT ================= */
+
+    .result,
+    .category-result{
+      margin-top:15px;
+      padding:0;
+      border:0;
+      background:transparent;
+    }
+
+    /* PRODUCT HERO */
+
+    .product-card{
+      background:#fff;
+      border:1px solid #d8e2ef;
+      border-radius:17px;
+      overflow:hidden;
+      box-shadow:0 10px 25px rgba(15,23,42,.07);
+    }
+
+    .product-head{
+      padding:17px;
+      background:
+        linear-gradient(135deg,#f8fbff,#edf5ff);
+      border-bottom:1px solid #dbe7f5;
+    }
+
+    .product-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:15px;
+    }
+
+    .category-tag{
+      display:inline-flex;
+      padding:5px 9px;
+      border-radius:999px;
+      background:#e8f1ff;
+      color:#1454b8;
+      font-size:10px;
+      font-weight:950;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      margin-bottom:7px;
+    }
+
+    .item-name{
+      font-size:21px;
+      line-height:1.2;
+      font-weight:950;
+      color:#07152d;
+    }
+
+    .item-meta{
+      margin-top:6px;
+      color:#64748b;
+      font-size:11px;
+      font-weight:650;
+    }
+
+    .price-box{
+      min-width:125px;
+      text-align:right;
+    }
+
+    .dp-label{
+      font-size:9px;
+      color:#64748b;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+    }
+
+    .dp-price{
+      display:inline-block;
+      margin-top:2px;
+      font-size:22px;
+      font-weight:950;
+      color:#0b4edb;
+    }
+
+    .mrp-price{
+      margin-top:3px;
+      font-size:11px;
+      color:var(--green);
+      font-weight:850;
+    }
+
+    /* ================= OFFER HIGHLIGHT ================= */
+
+    .offer-section{
+      padding:15px;
+      background:#fff;
+    }
+
+    .offer-heading{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
+    }
+
+    .offer-title{
+      display:flex;
+      align-items:center;
+      gap:7px;
+      color:#9a3412;
+      font-size:14px;
+      font-weight:950;
+    }
+
+    .offer-title span{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:26px;
+      height:26px;
+      border-radius:8px;
+      background:#ffedd5;
+      font-size:14px;
+    }
+
+    .scheme-label{
+      font-size:9px;
+      color:#ea580c;
+      font-weight:950;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+    }
+
+    .offers{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:9px;
+    }
+
+    .offer-pill{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      min-height:52px;
+      padding:9px 11px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#fff7ed,#ffedd5);
+      border:1px solid #fdba74;
+      box-shadow:0 5px 13px rgba(249,115,22,.12);
+    }
+
+    .offer-qty{
+      color:#9a3412;
+      font-size:12px;
+      font-weight:950;
+    }
+
+    .offer-arrow{
+      color:#f97316;
+      font-weight:950;
+    }
+
+    .offer-rate{
+      color:#7c2d12;
+      font-size:15px;
+      font-weight:950;
+      white-space:nowrap;
+    }
+
+    .no-offer{
+      padding:12px;
+      border-radius:11px;
+      background:#f8fafc;
+      color:#64748b;
+      font-size:12px;
+      border:1px dashed #cbd5e1;
+    }
+
+    /* ================= CATEGORY RESULT ================= */
+
+    .category-header{
+      padding:13px 15px;
+      background:var(--navy);
+      color:#fff;
+      border-radius:15px 15px 0 0;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .category-header strong{
+      font-size:14px;
+    }
+
+    .category-header small{
+      font-size:10px;
+      color:#a9c4ef;
+    }
+
+    .category-item{
+      background:#fff;
+      border:1px solid #dbe3ef;
+      border-top:0;
+      padding:14px;
+    }
+
+    .category-item:last-child{
+      border-radius:0 0 15px 15px;
+    }
+
+    .category-product{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:15px;
+    }
+
+    .category-name{
+      font-size:16px;
+      font-weight:950;
+      color:#0f172a;
+    }
+
+    .category-code{
+      margin-top:4px;
+      font-size:10px;
+      color:#64748b;
+      font-weight:700;
+    }
+
+    .category-price{
+      text-align:right;
+      white-space:nowrap;
+    }
+
+    .category-dp{
+      color:#0b4edb;
+      font-size:16px;
+      font-weight:950;
+    }
+
+    .category-mrp{
+      color:#16a34a;
+      font-size:10px;
+      font-weight:850;
+      margin-top:2px;
+    }
+
+    .category-offers{
+      margin-top:11px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+    }
+
+    .category-offer{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 9px;
+      border-radius:9px;
+      background:#fff7ed;
+      border:1px solid #fdba74;
+      color:#9a3412;
+      font-size:11px;
+      font-weight:900;
+    }
+
+    .category-offer strong{
+      color:#7c2d12;
+      font-size:12px;
+    }
+
+    .loading{
+      padding:14px;
+      border-radius:12px;
+      background:#fff;
+      border:1px dashed #cbd5e1;
+      color:#64748b;
+      font-size:12px;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media(max-width:760px){
+
       body{
-        padding:10px;
+        padding:9px;
+      }
+
+      .topbar{
+        border-radius:15px;
+        padding:14px;
+      }
+
+      .logo-box{
+        width:42px;
+        height:42px;
+        font-size:19px;
+      }
+
+      .brand-main{
+        font-size:15px;
+      }
+
+      .brand-sub{
+        font-size:9px;
+      }
+
+      .live-badge{
+        font-size:8px;
+        padding:6px 8px;
       }
 
       .card{
         padding:12px;
-        border-radius:14px;
+        border-radius:15px;
+      }
+
+      .page-title h1{
+        font-size:19px;
       }
 
       .row{
         grid-template-columns:1fr;
-        gap:8px;
+        gap:9px;
       }
 
-      .tiny{
+      .print-btn{
         width:100%;
       }
 
-      .hero{
+      .status{
+        text-align:left;
+      }
+
+      .product-top{
+        flex-direction:column;
+      }
+
+      .price-box{
+        width:100%;
+        text-align:left;
+        padding-top:5px;
+        border-top:1px solid #dbe7f5;
+      }
+
+      .offers{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .offer-pill{
+        min-height:48px;
+      }
+
+      .category-product{
+        flex-direction:column;
+      }
+
+      .category-price{
+        text-align:left;
+      }
+    }
+
+    @media(max-width:430px){
+
+      .offers{
         grid-template-columns:1fr;
       }
 
-      .dp{
-        display:inline-block;
+      .item-name{
+        font-size:19px;
+      }
+
+      .offer-pill{
+        min-height:50px;
+      }
+    }
+
+    /* ================= PRINT ================= */
+
+    @media print{
+
+      body{
+        background:#fff;
+        padding:0;
+      }
+
+      .topbar{
+        box-shadow:none;
+      }
+
+      .search-panel,
+      .page-title,
+      .status{
+        display:none;
+      }
+
+      .card{
+        border:0;
+        box-shadow:none;
+        padding:0;
+      }
+
+      .product-card,
+      .category-item{
+        box-shadow:none;
       }
     }
   </style>
@@ -221,62 +651,149 @@
 
 <div class="wrap">
 
+  <!-- ================= BRAND HEADER ================= -->
+
+  <div class="topbar">
+
+    <div class="brand-row">
+
+      <div class="brand-left">
+
+        <div class="logo-box">
+          VX
+        </div>
+
+        <div>
+          <div class="brand-main">
+            BHALLA SPORTS
+          </div>
+
+          <div class="brand-sub">
+            VX VIXEN • SPORTS PRODUCTS
+          </div>
+        </div>
+
+      </div>
+
+      <div class="live-badge">
+        ● LIVE DATA
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= MAIN ================= -->
+
   <div class="card">
 
-    <header>
-      <h2>📦 Live Item Search</h2>
-      <div class="brand">SCHEME VIXEN</div>
-    </header>
+    <div class="page-title">
 
-    <div class="row">
+      <div class="title-line"></div>
 
       <div>
-        <label>Code</label>
-        <input
-          type="number"
-          id="codeInput"
-          placeholder="1259"
-          autocomplete="off"
-        />
+        <h1>Scheme & Offer</h1>
+        <p>Search product by code, name or category</p>
       </div>
-
-      <div>
-        <label>Name</label>
-        <input
-          type="text"
-          id="nameInput"
-          placeholder="Yoga Mat"
-          autocomplete="off"
-        />
-      </div>
-
-      <div>
-        <label>Category</label>
-        <select id="categorySelect" disabled>
-          <option>Loading…</option>
-        </select>
-      </div>
-
-      <button class="tiny" onclick="window.print()">🖨</button>
 
     </div>
 
-    <div id="status" class="status">
-      Loading data...
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="search-panel">
+
+      <div class="row">
+
+        <div>
+          <label>Product Code</label>
+
+          <input
+            type="number"
+            id="codeInput"
+            placeholder="Enter code"
+            autocomplete="off"
+          />
+        </div>
+
+
+        <div>
+          <label>Product Name</label>
+
+          <input
+            type="text"
+            id="nameInput"
+            placeholder="Search product name"
+            autocomplete="off"
+          />
+        </div>
+
+
+        <div>
+          <label>Category</label>
+
+          <select id="categorySelect" disabled>
+
+            <option>
+              Loading…
+            </option>
+
+          </select>
+        </div>
+
+
+        <button
+          class="print-btn"
+          onclick="window.print()"
+          title="Print"
+        >
+          🖨
+        </button>
+
+      </div>
+
+
+      <div
+        id="status"
+        class="status"
+      >
+        Loading data...
+      </div>
+
     </div>
 
-    <div id="result" class="result" style="display:none;"></div>
 
-    <div id="categoryResults" class="result" style="display:none;"></div>
+    <!-- ================= SINGLE PRODUCT ================= -->
+
+    <div
+      id="result"
+      class="result"
+      style="display:none;"
+    ></div>
+
+
+    <!-- ================= CATEGORY ================= -->
+
+    <div
+      id="categoryResults"
+      class="category-result"
+      style="display:none;"
+    ></div>
 
   </div>
 
 </div>
 
+
 <script>
 
+/* =========================================================
+   ORIGINAL API + DATA LOGIC
+   ========================================================= */
+
 const API_URL =
-"https://script.google.com/macros/s/AKfycbxXFCPney8rGxtPs3KAu1Tuz1oUaDbpn5FGkDChqi5-7rbZbPbJBzUnr3lfLhq6L_iR-A/exec";
+"https://script.google.com/macros/s/AKfycbxXFCPney8rGxtPs3KA1uTuz1oUaDbpn5FGkDChqi5-7rbZbPbJBzUnr3lfLhq6L_iR-A/exec";
 
 const STORAGE_KEY = "SCHEME_VIXEN_DATA_V1";
 
@@ -340,12 +857,16 @@ function buildOffers(item){
 function saveLocalData(){
 
   try{
+
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify(sheetData)
     );
+
   }catch(e){
+
     console.log("Local save skipped");
+
   }
 
 }
@@ -362,7 +883,8 @@ function loadLocalData(){
       return false;
     }
 
-    const data = JSON.parse(saved);
+    const data =
+      JSON.parse(saved);
 
     if(
       Array.isArray(data) &&
@@ -425,11 +947,6 @@ function fetchFreshData(){
     statusBox.textContent =
       "✓ Live data updated";
 
-    /*
-      Agar user ne pehle search kiya hua hai
-      to current search dobara apply hoga.
-    */
-
     if(codeInput.value.trim()){
       autoSearch();
     }
@@ -490,6 +1007,10 @@ function fillCategoryDropdown(){
 }
 
 
+/* =========================================================
+   SINGLE ITEM DISPLAY
+   ========================================================= */
+
 function renderItem(item){
 
   const offers =
@@ -504,75 +1025,118 @@ function renderItem(item){
     "categoryResults"
   ).style.display = "none";
 
+
   result.innerHTML = `
 
-    <div class="hero">
+    <div class="product-card">
 
-      <div>
+      <div class="product-head">
 
-        <div class="item-name">
-          ${item["ITEM NAME"] || "-"}
-        </div>
+        <div class="product-top">
 
-        <div class="meta">
-          Code: ${item["CODE"] || "-"}
-          •
-          ${item["CATEGORY"] || "-"}
+          <div>
+
+            <div class="category-tag">
+              ${item["CATEGORY"] || "PRODUCT"}
+            </div>
+
+            <div class="item-name">
+              ${item["ITEM NAME"] || "-"}
+            </div>
+
+            <div class="item-meta">
+              CODE: ${item["CODE"] || "-"}
+            </div>
+
+          </div>
+
+
+          <div class="price-box">
+
+            <div class="dp-label">
+              Dealer Price
+            </div>
+
+            <div class="dp-price">
+              ₹ ${rupee(item["DP"])}
+            </div>
+
+            <div class="mrp-price">
+              MRP: ₹ ${rupee(item["MRP"])}
+            </div>
+
+          </div>
+
         </div>
 
       </div>
 
-      <div>
 
-        <div class="dp">
-          ₹ ${rupee(item["DP"])}
+      <div class="offer-section">
+
+        <div class="offer-heading">
+
+          <div class="offer-title">
+            <span>🔥</span>
+            SPECIAL SCHEME OFFER
+          </div>
+
+          <div class="scheme-label">
+            Slab Wise
+          </div>
+
         </div>
 
-        <div
-          class="meta"
-          style="font-weight:700;color:#16a34a;"
-        >
-          MRP: ₹ ${rupee(item["MRP"])}
+
+        <div class="offers">
+
+          ${
+            offers.length
+
+            ?
+
+            offers.map(o => `
+
+              <div class="offer-pill">
+
+                <div>
+                  <span class="offer-qty">
+                    QTY ${o.q}
+                  </span>
+
+                  <span class="offer-arrow">
+                    →
+                  </span>
+                </div>
+
+                <div class="offer-rate">
+                  ₹ ${rupee(o.p)}
+                </div>
+
+              </div>
+
+            `).join("")
+
+            :
+
+            `<div class="no-offer">
+              No special scheme offer available
+            </div>`
+          }
+
         </div>
 
       </div>
 
     </div>
 
-    <div class="offer-title">
-      🔥 Special Offers
-    </div>
-
-    <div class="offers">
-
-      ${
-        offers.length
-
-        ?
-
-        offers.map(o => `
-
-          <span class="offer-pill">
-            ${o.q}
-            →
-            <strong>
-              ₹ ${rupee(o.p)}
-            </strong>
-          </span>
-
-        `).join("")
-
-        :
-
-        `<span class="meta">
-          No offer
-        </span>`
-      }
-
-    </div>
   `;
 }
 
+
+/* =========================================================
+   SEARCH BY CODE
+   ========================================================= */
 
 function autoSearch(){
 
@@ -598,6 +1162,10 @@ function autoSearch(){
   renderItem(item);
 }
 
+
+/* =========================================================
+   SEARCH BY NAME
+   ========================================================= */
 
 function searchByName(){
 
@@ -629,6 +1197,12 @@ function searchByName(){
 }
 
 
+/* =========================================================
+   CATEGORY SEARCH
+   IMPORTANT:
+   CATEGORY RESULT ME BHI OFFERS SHOW HONGE
+   ========================================================= */
+
 function searchByCategory(){
 
   const category =
@@ -650,100 +1224,131 @@ function searchByCategory(){
     return;
   }
 
+
   const items =
     sheetData.filter(
       item =>
         item["CATEGORY"] === category
     );
 
+
   box.style.display = "block";
 
-  box.innerHTML = items.length
 
-    ?
+  box.innerHTML = `
 
-    items.map(item => {
+    <div class="category-header">
 
-      const offers =
-        buildOffers(item);
+      <strong>
+        ${category}
+      </strong>
 
-      return `
+      <small>
+        ${items.length} ITEMS
+      </small>
 
-        <div
-          class="hero"
-          style="margin-bottom:8px"
-        >
+    </div>
 
-          <div>
+    ${
+      items.length
 
-            <div class="item-name">
-              ${item["ITEM NAME"] || "-"}
+      ?
+
+      items.map(item => {
+
+        const offers =
+          buildOffers(item);
+
+        return `
+
+          <div class="category-item">
+
+            <div class="category-product">
+
+              <div>
+
+                <div class="category-name">
+                  ${item["ITEM NAME"] || "-"}
+                </div>
+
+                <div class="category-code">
+                  CODE: ${item["CODE"] || "-"}
+                </div>
+
+              </div>
+
+
+              <div class="category-price">
+
+                <div class="category-dp">
+                  ₹ ${rupee(item["DP"])}
+                </div>
+
+                <div class="category-mrp">
+                  MRP: ₹ ${rupee(item["MRP"])}
+                </div>
+
+              </div>
+
             </div>
 
-            <div class="meta">
-              Code: ${item["CODE"] || "-"}
+
+            <div class="category-offers">
+
+              ${
+                offers.length
+
+                ?
+
+                offers.map(o => `
+
+                  <div class="category-offer">
+
+                    <span>
+                      QTY ${o.q}
+                    </span>
+
+                    <span>
+                      →
+                    </span>
+
+                    <strong>
+                      ₹ ${rupee(o.p)}
+                    </strong>
+
+                  </div>
+
+                `).join("")
+
+                :
+
+                `<div class="no-offer">
+                  No special offer
+                </div>`
+              }
+
             </div>
 
           </div>
 
-          <div>
+        `;
 
-            <div class="dp">
-              ₹ ${rupee(item["DP"])}
-            </div>
+      }).join("")
 
-            <div
-              class="meta"
-              style="font-weight:700;color:#16a34a;"
-            >
-              MRP: ₹ ${rupee(item["MRP"])}
-            </div>
+      :
 
-          </div>
+      `<div class="loading">
+        No items in this category
+      </div>`
+    }
 
-        </div>
-
-        <div class="offers">
-
-          ${
-            offers.length
-
-            ?
-
-            offers.map(o => `
-
-              <span class="offer-pill">
-                ${o.q}
-                →
-                <strong>
-                  ₹ ${rupee(o.p)}
-                </strong>
-              </span>
-
-            `).join("")
-
-            :
-
-            `<span class="meta">
-              No offer
-            </span>`
-          }
-
-        </div>
-
-      `;
-
-    }).join(
-      "<hr style='border-color:#e5e7eb;margin:10px 0'/>"
-    )
-
-    :
-
-    `<div class="loading">
-      No items in this category
-    </div>`;
+  `;
 }
 
+
+/* =========================================================
+   CLEAR
+   ========================================================= */
 
 function clearAll(){
 
@@ -758,6 +1363,10 @@ function clearAll(){
 }
 
 
+/* =========================================================
+   NOT FOUND
+   ========================================================= */
+
 function showNotFound(){
 
   const result =
@@ -766,13 +1375,19 @@ function showNotFound(){
   result.style.display = "block";
 
   result.innerHTML = `
+
     <div class="loading">
       ❌ Item not found
     </div>
+
   `;
 
 }
 
+
+/* =========================================================
+   EVENTS
+   ========================================================= */
 
 codeInput.addEventListener(
   "input",
@@ -806,20 +1421,11 @@ categorySelect.addEventListener(
 );
 
 
-/*
-  IMPORTANT:
-  Pehle saved data load karo.
-  Isse repeat users ko app almost
-  immediately usable milta hai.
-*/
+/* =========================================================
+   START
+   ========================================================= */
 
 loadLocalData();
-
-
-/*
-  Saath mein fresh Google Sheet data
-  background mein fetch karo.
-*/
 
 fetchFreshData();
 
