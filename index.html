@@ -1,17 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07111f">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#07111f">
+
 <title>VIXEN Price Board</title>
 
+
 <style>
+
+/* ================= RESET ================= */
+
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
+
+
+/* ================= VARIABLES ================= */
 
 :root{
   --navy:#07111f;
@@ -27,12 +41,16 @@
   --white:#ffffff;
 }
 
+
+/* ================= BODY ================= */
+
 body{
   font-family:Arial,Helvetica,sans-serif;
   background:#eef2f6;
   color:var(--text);
   min-height:100vh;
 }
+
 
 /* ================= HEADER ================= */
 
@@ -118,6 +136,7 @@ body{
   color:#b7c5d7;
 }
 
+
 /* ================= MAIN ================= */
 
 .container{
@@ -125,6 +144,7 @@ body{
   margin:auto;
   padding:28px 25px 50px;
 }
+
 
 /* ================= SEARCH BOARD ================= */
 
@@ -192,6 +212,7 @@ body{
   font-size:11px;
   color:#788596;
 }
+
 
 /* ================= PRODUCT BOARD ================= */
 
@@ -279,12 +300,15 @@ body{
   color:var(--navy);
 }
 
-/* MRP — NO CUT / NO LINE THROUGH */
+
+/* ================= MRP - NO CUT ================= */
+
 .mrp .price{
   color:#5d6877;
   font-size:23px;
-  text-decoration:none;
+  text-decoration:none !important;
 }
+
 
 /* ================= SCHEME ================= */
 
@@ -370,6 +394,7 @@ body{
   font-size:13px;
 }
 
+
 /* ================= CATEGORY ================= */
 
 #categoryResults{
@@ -454,7 +479,7 @@ body{
 .cat-mrp{
   font-size:13px;
   color:#687483;
-  text-decoration:none;
+  text-decoration:none !important;
 }
 
 .cat-offers{
@@ -475,6 +500,7 @@ body{
   color:#b86d00;
   font-size:11px;
 }
+
 
 /* ================= BUTTONS ================= */
 
@@ -500,6 +526,7 @@ body{
   background:var(--blue);
 }
 
+
 /* ================= NOT FOUND ================= */
 
 .loading{
@@ -511,6 +538,7 @@ body{
   box-shadow:0 8px 25px rgba(0,0,0,.05);
 }
 
+
 /* ================= FOOTER ================= */
 
 .footer{
@@ -520,6 +548,7 @@ body{
   font-size:10px;
   letter-spacing:1px;
 }
+
 
 /* ================= MOBILE ================= */
 
@@ -656,7 +685,9 @@ body{
   .cat-offer{
     padding:6px 8px;
   }
+
 }
+
 
 /* ================= PRINT ================= */
 
@@ -690,17 +721,22 @@ body{
     box-shadow:none;
   }
 
-  /* Print mein bhi MRP cut nahi hoga */
   .mrp .price,
   .cat-mrp{
     text-decoration:none !important;
   }
+
 }
 
 </style>
+
 </head>
 
+
 <body>
+
+
+<!-- ================= HEADER ================= -->
 
 <header class="header">
 
@@ -708,7 +744,9 @@ body{
 
     <div class="brand">
 
-      <div class="vx">VX</div>
+      <div class="vx">
+        VX
+      </div>
 
       <div class="brand-text">
 
@@ -728,6 +766,7 @@ body{
 
     </div>
 
+
     <div class="header-tag">
       DEALER PRICE • SCHEME • MRP
     </div>
@@ -737,9 +776,12 @@ body{
 </header>
 
 
+<!-- ================= MAIN ================= -->
+
 <main class="container">
 
-  <!-- SEARCH -->
+
+  <!-- ================= SEARCH BOARD ================= -->
 
   <section class="search-board">
 
@@ -757,6 +799,7 @@ body{
 
 
     <div class="search-grid">
+
 
       <div class="field">
 
@@ -782,7 +825,9 @@ body{
 
       <div class="field">
 
-        <select id="categorySelect" disabled>
+        <select
+          id="categorySelect"
+          disabled>
 
           <option>
             Loading categories...
@@ -795,24 +840,31 @@ body{
     </div>
 
 
-    <div id="status" class="status">
+    <div
+      id="status"
+      class="status">
+
       Loading price data...
+
     </div>
 
   </section>
 
 
-  <!-- PRODUCT RESULT -->
+  <!-- ================= PRODUCT RESULT ================= -->
 
   <section id="result"></section>
 
 
-  <!-- CATEGORY RESULT -->
+  <!-- ================= CATEGORY RESULT ================= -->
 
   <section id="categoryResults"></section>
 
+
 </main>
 
+
+<!-- ================= FOOTER ================= -->
 
 <footer class="footer">
 
@@ -825,14 +877,37 @@ body{
 
 <script>
 
+
+/* =====================================================
+   GOOGLE APPS SCRIPT API
+   ===================================================== */
+
 const API_URL =
 "https://script.google.com/macros/s/AKfycbzqH6bQlf6vnCN5TgJdZVU31i0A5RBuwHCif1BOMuVzAQUOfw7umMseiZ5_kEkSV6mbqQ/exec";
+
+
+/* =====================================================
+   LOCAL STORAGE
+   ===================================================== */
 
 const STORAGE_KEY =
 "SCHEME_VIXEN_DATA_V1";
 
+
+/* =====================================================
+   VARIABLES
+   ===================================================== */
+
 let sheetData = [];
+
 let searchTimer = null;
+
+let isFetching = false;
+
+
+/* =====================================================
+   ELEMENTS
+   ===================================================== */
 
 const codeInput =
 document.getElementById("codeInput");
@@ -847,7 +922,9 @@ const statusBox =
 document.getElementById("status");
 
 
-/* ================= RUPEE ================= */
+/* =====================================================
+   RUPEE FORMAT
+   ===================================================== */
 
 function rupee(val){
 
@@ -855,8 +932,12 @@ function rupee(val){
     val === null ||
     val === undefined ||
     val === ""
-  )
+  ){
+
     return "-";
+
+  }
+
 
   return String(val)
     .replace(/₹/g,"")
@@ -865,19 +946,29 @@ function rupee(val){
 }
 
 
-/* ================= OFFERS ================= */
+/* =====================================================
+   BUILD OFFERS
+   ===================================================== */
 
 function buildOffers(item){
 
   const offers = [];
 
-  ["","_1","_2","_3","_4"].forEach(s => {
+
+  [
+    "",
+    "_1",
+    "_2",
+    "_3",
+    "_4"
+  ].forEach(s => {
 
     const q =
       item["Qty" + s];
 
     const p =
       item["OFFER RATE" + s];
+
 
     if(
       q !== null &&
@@ -897,12 +988,15 @@ function buildOffers(item){
 
   });
 
+
   return offers;
 
 }
 
 
-/* ================= LOCAL DATA ================= */
+/* =====================================================
+   SAVE LOCAL DATA
+   ===================================================== */
 
 function saveLocalData(){
 
@@ -913,7 +1007,8 @@ function saveLocalData(){
       JSON.stringify(sheetData)
     );
 
-  }catch(e){
+  }
+  catch(e){
 
     console.log(
       "Local save skipped"
@@ -924,6 +1019,10 @@ function saveLocalData(){
 }
 
 
+/* =====================================================
+   LOAD LOCAL DATA
+   ===================================================== */
+
 function loadLocalData(){
 
   try{
@@ -933,32 +1032,44 @@ function loadLocalData(){
         STORAGE_KEY
       );
 
-    if(!saved)
+
+    if(!saved){
+
       return false;
+
+    }
+
 
     const data =
       JSON.parse(saved);
+
 
     if(
       Array.isArray(data) &&
       data.length
     ){
 
-      sheetData = data;
+      sheetData =
+        data;
+
 
       fillCategoryDropdown();
+
 
       categorySelect.disabled =
         false;
 
+
       statusBox.textContent =
-        "Data ready • Updating...";
+        "Data ready • Checking latest data...";
+
 
       return true;
 
     }
 
-  }catch(e){
+  }
+  catch(e){
 
     console.log(
       "Local data error"
@@ -966,56 +1077,97 @@ function loadLocalData(){
 
   }
 
+
   return false;
 
 }
 
 
-/* ================= API ================= */
+/* =====================================================
+   FETCH FRESH DATA
+   ===================================================== */
 
 function fetchFreshData(){
 
-  fetch(API_URL,{
-    method:"GET",
-    cache:"no-store"
-  })
+  /* Prevent multiple requests at same time */
+
+  if(isFetching){
+
+    return;
+
+  }
+
+
+  isFetching = true;
+
+
+  fetch(
+    API_URL +
+    "?t=" +
+    Date.now(),
+    {
+      method:"GET",
+      cache:"no-store"
+    }
+  )
 
   .then(response => {
 
-    if(!response.ok)
+    if(!response.ok){
+
       throw new Error(
         "Network error"
       );
+
+    }
+
 
     return response.json();
 
   })
 
+
   .then(data => {
 
-    if(!Array.isArray(data))
+    if(!Array.isArray(data)){
+
       throw new Error(
         "Invalid data"
       );
 
-    sheetData = data;
+    }
+
+
+    sheetData =
+      data;
+
 
     saveLocalData();
 
+
     fillCategoryDropdown();
+
 
     categorySelect.disabled =
       false;
 
+
     statusBox.textContent =
       "✓ Live data updated";
 
-    if(codeInput.value.trim()){
+
+    /* Keep current search visible */
+
+    if(
+      codeInput.value.trim()
+    ){
 
       autoSearch();
 
     }
-    else if(nameInput.value.trim()){
+    else if(
+      nameInput.value.trim()
+    ){
 
       searchByName();
 
@@ -1023,42 +1175,65 @@ function fetchFreshData(){
 
   })
 
+
   .catch(error => {
 
-    console.log(error);
+    console.log(
+      "Data update error:",
+      error
+    );
+
 
     if(sheetData.length){
 
       statusBox.textContent =
-        "✓ Saved data • Live update unavailable";
+        "✓ Data ready • Checking for updates...";
 
-    }else{
+    }
+    else{
 
       statusBox.textContent =
         "❌ Unable to load data";
+
 
       categorySelect.innerHTML =
         "<option>Unable to load</option>";
 
     }
 
+  })
+
+
+  .finally(() => {
+
+    isFetching =
+      false;
+
   });
 
 }
 
 
-/* ================= CATEGORY ================= */
+/* =====================================================
+   CATEGORY DROPDOWN
+   ===================================================== */
 
 function fillCategoryDropdown(){
 
   const categories = [
+
     ...new Set(
+
       sheetData
+
         .map(item =>
           item["CATEGORY"]
         )
+
         .filter(Boolean)
+
     )
+
   ].sort();
 
 
@@ -1073,11 +1248,14 @@ function fillCategoryDropdown(){
         "option"
       );
 
+
     option.value =
       category;
 
+
     option.textContent =
       category;
+
 
     categorySelect.appendChild(
       option
@@ -1088,12 +1266,15 @@ function fillCategoryDropdown(){
 }
 
 
-/* ================= SEARCH CODE ================= */
+/* =====================================================
+   SEARCH BY PRODUCT CODE
+   ===================================================== */
 
 function autoSearch(){
 
   const code =
     codeInput.value.trim();
+
 
   if(!code){
 
@@ -1106,8 +1287,12 @@ function autoSearch(){
 
   const item =
     sheetData.find(row =>
-      String(row["CODE"])
-        .trim() === code
+
+      String(
+        row["CODE"]
+      )
+      .trim() === code
+
     );
 
 
@@ -1125,7 +1310,9 @@ function autoSearch(){
 }
 
 
-/* ================= SEARCH NAME ================= */
+/* =====================================================
+   SEARCH BY PRODUCT NAME
+   ===================================================== */
 
 function searchByName(){
 
@@ -1134,17 +1321,23 @@ function searchByName(){
       .trim()
       .toLowerCase();
 
-  if(!name)
+
+  if(!name){
+
     return;
+
+  }
 
 
   const item =
     sheetData.find(row =>
+
       String(
         row["ITEM NAME"] || ""
       )
       .toLowerCase()
       .includes(name)
+
     );
 
 
@@ -1166,7 +1359,9 @@ function searchByName(){
 }
 
 
-/* ================= RENDER PRODUCT ================= */
+/* =====================================================
+   RENDER PRODUCT
+   ===================================================== */
 
 function renderItem(item){
 
@@ -1174,6 +1369,7 @@ function renderItem(item){
     document.getElementById(
       "result"
     );
+
 
   const categoryResults =
     document.getElementById(
@@ -1183,6 +1379,7 @@ function renderItem(item){
 
   categoryResults.style.display =
     "none";
+
 
   result.style.display =
     "block";
@@ -1198,6 +1395,7 @@ function renderItem(item){
   if(offers.length){
 
     offerHTML =
+
       offers.map(offer => {
 
         return `
@@ -1214,6 +1412,7 @@ function renderItem(item){
 
             </div>
 
+
             <div class="offer-price">
 
               ₹${rupee(offer.p)}
@@ -1226,7 +1425,9 @@ function renderItem(item){
 
       }).join("");
 
-  }else{
+
+  }
+  else{
 
     offerHTML = `
 
@@ -1246,9 +1447,12 @@ function renderItem(item){
 
     <div class="product-board">
 
+
       <div class="product-top">
 
+
         <div class="product-info">
+
 
           <div class="category-label">
 
@@ -1272,12 +1476,15 @@ function renderItem(item){
 
           </div>
 
+
         </div>
 
 
         <div class="price-area">
 
+
           <div class="price-box">
+
 
             <div class="price-label">
 
@@ -1285,16 +1492,19 @@ function renderItem(item){
 
             </div>
 
+
             <div class="price">
 
               ₹${rupee(item["DP"])}
 
             </div>
 
+
           </div>
 
 
           <div class="price-box mrp">
+
 
             <div class="price-label">
 
@@ -1302,30 +1512,39 @@ function renderItem(item){
 
             </div>
 
+
             <div class="price">
 
               ₹${rupee(item["MRP"])}
 
             </div>
 
+
           </div>
 
+
         </div>
+
 
       </div>
 
 
       <div class="scheme-section">
 
+
         <div class="scheme-heading">
+
 
           <div class="scheme-heading-left">
 
+
             <div class="scheme-mark"></div>
+
 
             <strong>
               Special Scheme
             </strong>
+
 
           </div>
 
@@ -1333,6 +1552,7 @@ function renderItem(item){
           <span>
             QUANTITY BASED OFFER
           </span>
+
 
         </div>
 
@@ -1343,12 +1563,15 @@ function renderItem(item){
 
         </div>
 
+
       </div>
+
 
     </div>
 
 
     <div class="actions">
+
 
       <button
         class="print-btn"
@@ -1358,6 +1581,7 @@ function renderItem(item){
 
       </button>
 
+
     </div>
 
   `;
@@ -1365,12 +1589,15 @@ function renderItem(item){
 }
 
 
-/* ================= CATEGORY SEARCH ================= */
+/* =====================================================
+   CATEGORY SEARCH
+   ===================================================== */
 
 function searchByCategory(){
 
   const category =
     categorySelect.value;
+
 
   const box =
     document.getElementById(
@@ -1380,7 +1607,8 @@ function searchByCategory(){
 
   document.getElementById(
     "result"
-  ).style.display = "none";
+  ).style.display =
+    "none";
 
 
   if(!category){
@@ -1395,7 +1623,9 @@ function searchByCategory(){
 
   const items =
     sheetData.filter(item =>
+
       item["CATEGORY"] === category
+
     );
 
 
@@ -1408,6 +1638,7 @@ function searchByCategory(){
 
   items.forEach(item => {
 
+
     const offers =
       buildOffers(item);
 
@@ -1418,6 +1649,7 @@ function searchByCategory(){
     if(offers.length){
 
       offersHTML =
+
         offers.map(offer => {
 
           return `
@@ -1437,7 +1669,8 @@ function searchByCategory(){
 
         }).join("");
 
-    }else{
+    }
+    else{
 
       offersHTML = `
 
@@ -1459,9 +1692,11 @@ function searchByCategory(){
 
       <div class="catalogue-row">
 
+
         <div class="cat-product">
 
           ${item["ITEM NAME"] || "-"}
+
 
           <span class="cat-code">
 
@@ -1469,6 +1704,7 @@ function searchByCategory(){
             ${item["CODE"] || "-"}
 
           </span>
+
 
         </div>
 
@@ -1493,6 +1729,7 @@ function searchByCategory(){
 
         </div>
 
+
       </div>
 
     `;
@@ -1504,41 +1741,55 @@ function searchByCategory(){
 
     <div class="catalogue">
 
+
       <div class="catalogue-title">
 
+
         <h2>
+
           ${category}
+
         </h2>
 
+
         <span>
+
           ${items.length} PRODUCTS
+
         </span>
+
 
       </div>
 
 
       <div class="table-head">
 
+
         <div>
           PRODUCT
         </div>
+
 
         <div>
           DP
         </div>
 
+
         <div>
           MRP
         </div>
+
 
         <div>
           SCHEME
         </div>
 
+
       </div>
 
 
       ${rows}
+
 
     </div>
 
@@ -1547,23 +1798,29 @@ function searchByCategory(){
 }
 
 
-/* ================= CLEAR ================= */
+/* =====================================================
+   CLEAR ALL
+   ===================================================== */
 
 function clearAll(){
 
   document.getElementById(
     "result"
-  ).style.display = "none";
+  ).style.display =
+    "none";
 
 
   document.getElementById(
     "categoryResults"
-  ).style.display = "none";
+  ).style.display =
+    "none";
 
 }
 
 
-/* ================= NOT FOUND ================= */
+/* =====================================================
+   NOT FOUND
+   ===================================================== */
 
 function showNotFound(){
 
@@ -1589,6 +1846,7 @@ function showNotFound(){
 
       ❌ Item not found
 
+
       <div style="
         font-size:11px;
         margin-top:8px;
@@ -1600,6 +1858,7 @@ function showNotFound(){
 
       </div>
 
+
     </div>
 
   `;
@@ -1607,13 +1866,18 @@ function showNotFound(){
 }
 
 
-/* ================= INPUT EVENTS ================= */
+/* =====================================================
+   CODE INPUT
+   ===================================================== */
 
 codeInput.addEventListener(
   "input",
   () => {
 
-    clearTimeout(searchTimer);
+    clearTimeout(
+      searchTimer
+    );
+
 
     searchTimer =
       setTimeout(
@@ -1625,11 +1889,18 @@ codeInput.addEventListener(
 );
 
 
+/* =====================================================
+   NAME INPUT
+   ===================================================== */
+
 nameInput.addEventListener(
   "input",
   () => {
 
-    clearTimeout(searchTimer);
+    clearTimeout(
+      searchTimer
+    );
+
 
     searchTimer =
       setTimeout(
@@ -1641,19 +1912,39 @@ nameInput.addEventListener(
 );
 
 
+/* =====================================================
+   CATEGORY INPUT
+   ===================================================== */
+
 categorySelect.addEventListener(
   "change",
   searchByCategory
 );
 
 
-/* ================= START ================= */
+/* =====================================================
+   INITIAL LOAD
+   ===================================================== */
 
 loadLocalData();
 
 fetchFreshData();
 
+
+/* =====================================================
+   AUTO UPDATE
+   EVERY 5 SECONDS
+   ===================================================== */
+
+setInterval(
+  fetchFreshData,
+  5000
+);
+
+
 </script>
 
+
 </body>
+
 </html>
