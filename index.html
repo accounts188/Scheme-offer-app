@@ -279,10 +279,11 @@ body{
   color:var(--navy);
 }
 
+/* MRP — NO CUT / NO LINE THROUGH */
 .mrp .price{
-  color:#8b95a3;
-  text-decoration:line-through;
+  color:#5d6877;
   font-size:23px;
+  text-decoration:none;
 }
 
 /* ================= SCHEME ================= */
@@ -452,8 +453,8 @@ body{
 
 .cat-mrp{
   font-size:13px;
-  color:#87919e;
-  text-decoration:line-through;
+  color:#687483;
+  text-decoration:none;
 }
 
 .cat-offers{
@@ -671,14 +672,14 @@ body{
     print-color-adjust:exact;
   }
 
+  .container{
+    padding:20px;
+  }
+
   .search-board,
   .footer,
   .actions{
     display:none !important;
-  }
-
-  .container{
-    padding:20px;
   }
 
   #result{
@@ -688,23 +689,43 @@ body{
   .product-board{
     box-shadow:none;
   }
+
+  /* Print mein bhi MRP cut nahi hoga */
+  .mrp .price,
+  .cat-mrp{
+    text-decoration:none !important;
+  }
 }
+
 </style>
 </head>
 
 <body>
 
 <header class="header">
+
   <div class="header-inner">
 
     <div class="brand">
+
       <div class="vx">VX</div>
 
       <div class="brand-text">
-        <div class="small">BHALLA SPORTS</div>
-        <div class="main">VIXEN</div>
-        <div class="sub">SPORTS PRICE BOARD</div>
+
+        <div class="small">
+          BHALLA SPORTS
+        </div>
+
+        <div class="main">
+          VIXEN
+        </div>
+
+        <div class="sub">
+          SPORTS PRICE BOARD
+        </div>
+
       </div>
+
     </div>
 
     <div class="header-tag">
@@ -712,43 +733,67 @@ body{
     </div>
 
   </div>
+
 </header>
+
 
 <main class="container">
 
   <!-- SEARCH -->
+
   <section class="search-board">
 
     <div class="search-title">
-      <strong>Product Search</strong>
-      <span>Search by product code, name or category</span>
+
+      <strong>
+        Product Search
+      </strong>
+
+      <span>
+        Search by product code, name or category
+      </span>
+
     </div>
+
 
     <div class="search-grid">
 
       <div class="field">
+
         <input
           id="codeInput"
           type="text"
           placeholder="PRODUCT CODE"
           autocomplete="off">
+
       </div>
 
+
       <div class="field">
+
         <input
           id="nameInput"
           type="text"
           placeholder="SEARCH PRODUCT NAME"
           autocomplete="off">
+
       </div>
 
+
       <div class="field">
+
         <select id="categorySelect" disabled>
-          <option value="">Loading categories...</option>
+
+          <option>
+            Loading categories...
+          </option>
+
         </select>
+
       </div>
 
     </div>
+
 
     <div id="status" class="status">
       Loading price data...
@@ -758,16 +803,23 @@ body{
 
 
   <!-- PRODUCT RESULT -->
+
   <section id="result"></section>
 
 
   <!-- CATEGORY RESULT -->
+
   <section id="categoryResults"></section>
 
 </main>
 
+
 <footer class="footer">
-  BHALLA SPORTS PVT. LTD. • VIXEN • PRICE BOARD
+
+  BHALLA SPORTS PVT. LTD.
+  • VIXEN
+  • PRICE BOARD
+
 </footer>
 
 
@@ -776,22 +828,40 @@ body{
 const API_URL =
 "https://script.google.com/macros/s/AKfycbxXFCPney8rGxtPs3KA1uTuz1oUaDbpn5FGkDChqi5-7rbZbPbJBzUnr3lfLhq6L_iR-A/exec";
 
-const STORAGE_KEY = "SCHEME_VIXEN_DATA_V1";
+const STORAGE_KEY =
+"SCHEME_VIXEN_DATA_V1";
 
 let sheetData = [];
 let searchTimer = null;
 
-const codeInput = document.getElementById("codeInput");
-const nameInput = document.getElementById("nameInput");
-const categorySelect = document.getElementById("categorySelect");
-const statusBox = document.getElementById("status");
+const codeInput =
+document.getElementById("codeInput");
+
+const nameInput =
+document.getElementById("nameInput");
+
+const categorySelect =
+document.getElementById("categorySelect");
+
+const statusBox =
+document.getElementById("status");
 
 
 /* ================= RUPEE ================= */
 
 function rupee(val){
-  if(val === null || val === undefined || val === "") return "-";
-  return String(val).replace(/₹/g,"").trim();
+
+  if(
+    val === null ||
+    val === undefined ||
+    val === ""
+  )
+    return "-";
+
+  return String(val)
+    .replace(/₹/g,"")
+    .trim();
+
 }
 
 
@@ -803,8 +873,11 @@ function buildOffers(item){
 
   ["","_1","_2","_3","_4"].forEach(s => {
 
-    const q = item["Qty" + s];
-    const p = item["OFFER RATE" + s];
+    const q =
+      item["Qty" + s];
+
+    const p =
+      item["OFFER RATE" + s];
 
     if(
       q !== null &&
@@ -814,15 +887,18 @@ function buildOffers(item){
       p !== undefined &&
       p !== ""
     ){
+
       offers.push({
         q:q,
         p:p
       });
+
     }
 
   });
 
   return offers;
+
 }
 
 
@@ -839,7 +915,9 @@ function saveLocalData(){
 
   }catch(e){
 
-    console.log("Local save skipped");
+    console.log(
+      "Local save skipped"
+    );
 
   }
 
@@ -850,19 +928,28 @@ function loadLocalData(){
 
   try{
 
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved =
+      localStorage.getItem(
+        STORAGE_KEY
+      );
 
-    if(!saved) return false;
+    if(!saved)
+      return false;
 
-    const data = JSON.parse(saved);
+    const data =
+      JSON.parse(saved);
 
-    if(Array.isArray(data) && data.length){
+    if(
+      Array.isArray(data) &&
+      data.length
+    ){
 
       sheetData = data;
 
       fillCategoryDropdown();
 
-      categorySelect.disabled = false;
+      categorySelect.disabled =
+        false;
 
       statusBox.textContent =
         "Data ready • Updating...";
@@ -873,7 +960,9 @@ function loadLocalData(){
 
   }catch(e){
 
-    console.log("Local data error");
+    console.log(
+      "Local data error"
+    );
 
   }
 
@@ -894,7 +983,9 @@ function fetchFreshData(){
   .then(response => {
 
     if(!response.ok)
-      throw new Error("Network error");
+      throw new Error(
+        "Network error"
+      );
 
     return response.json();
 
@@ -903,7 +994,9 @@ function fetchFreshData(){
   .then(data => {
 
     if(!Array.isArray(data))
-      throw new Error("Invalid data");
+      throw new Error(
+        "Invalid data"
+      );
 
     sheetData = data;
 
@@ -911,16 +1004,22 @@ function fetchFreshData(){
 
     fillCategoryDropdown();
 
-    categorySelect.disabled = false;
+    categorySelect.disabled =
+      false;
 
     statusBox.textContent =
       "✓ Live data updated";
 
-    if(codeInput.value.trim())
+    if(codeInput.value.trim()){
+
       autoSearch();
 
-    else if(nameInput.value.trim())
+    }
+    else if(nameInput.value.trim()){
+
       searchByName();
+
+    }
 
   })
 
@@ -955,23 +1054,34 @@ function fillCategoryDropdown(){
   const categories = [
     ...new Set(
       sheetData
-      .map(item => item["CATEGORY"])
-      .filter(Boolean)
+        .map(item =>
+          item["CATEGORY"]
+        )
+        .filter(Boolean)
     )
   ].sort();
+
 
   categorySelect.innerHTML =
     '<option value="">ALL CATEGORIES</option>';
 
+
   categories.forEach(category => {
 
     const option =
-      document.createElement("option");
+      document.createElement(
+        "option"
+      );
 
-    option.value = category;
-    option.textContent = category;
+    option.value =
+      category;
 
-    categorySelect.appendChild(option);
+    option.textContent =
+      category;
+
+    categorySelect.appendChild(
+      option
+    );
 
   });
 
@@ -988,21 +1098,27 @@ function autoSearch(){
   if(!code){
 
     clearAll();
+
     return;
 
   }
 
+
   const item =
     sheetData.find(row =>
-      String(row["CODE"]).trim() === code
+      String(row["CODE"])
+        .trim() === code
     );
+
 
   if(!item){
 
     showNotFound();
+
     return;
 
   }
+
 
   renderItem(item);
 
@@ -1014,26 +1130,36 @@ function autoSearch(){
 function searchByName(){
 
   const name =
-    nameInput.value.trim().toLowerCase();
+    nameInput.value
+      .trim()
+      .toLowerCase();
 
-  if(!name) return;
+  if(!name)
+    return;
+
 
   const item =
     sheetData.find(row =>
-      String(row["ITEM NAME"] || "")
+      String(
+        row["ITEM NAME"] || ""
+      )
       .toLowerCase()
       .includes(name)
     );
 
+
   if(!item){
 
     showNotFound();
+
     return;
 
   }
 
+
   codeInput.value =
     item["CODE"];
+
 
   renderItem(item);
 
@@ -1045,10 +1171,15 @@ function searchByName(){
 function renderItem(item){
 
   const result =
-    document.getElementById("result");
+    document.getElementById(
+      "result"
+    );
 
   const categoryResults =
-    document.getElementById("categoryResults");
+    document.getElementById(
+      "categoryResults"
+    );
+
 
   categoryResults.style.display =
     "none";
@@ -1056,10 +1187,13 @@ function renderItem(item){
   result.style.display =
     "block";
 
+
   const offers =
     buildOffers(item);
 
+
   let offerHTML = "";
+
 
   if(offers.length){
 
@@ -1067,28 +1201,43 @@ function renderItem(item){
       offers.map(offer => {
 
         return `
+
           <div class="offer">
 
             <div class="offer-qty">
+
               QTY
-              <b>${offer.q}</b>
+
+              <b>
+                ${offer.q}
+              </b>
+
             </div>
 
             <div class="offer-price">
+
               ₹${rupee(offer.p)}
+
             </div>
 
           </div>
+
         `;
 
       }).join("");
 
   }else{
 
-    offerHTML =
-      `<div class="no-offer">
-        No special scheme available for this product.
-      </div>`;
+    offerHTML = `
+
+      <div class="no-offer">
+
+        No special scheme available
+        for this product.
+
+      </div>
+
+    `;
 
   }
 
@@ -1102,15 +1251,25 @@ function renderItem(item){
         <div class="product-info">
 
           <div class="category-label">
-            ${item["CATEGORY"] || "SPORTS PRODUCT"}
+
+            ${item["CATEGORY"] ||
+              "SPORTS PRODUCT"}
+
           </div>
+
 
           <div class="product-name">
+
             ${item["ITEM NAME"] || "-"}
+
           </div>
 
+
           <div class="product-code">
-            PRODUCT CODE : ${item["CODE"] || "-"}
+
+            PRODUCT CODE :
+            ${item["CODE"] || "-"}
+
           </div>
 
         </div>
@@ -1121,11 +1280,15 @@ function renderItem(item){
           <div class="price-box">
 
             <div class="price-label">
+
               Dealer Price
+
             </div>
 
             <div class="price">
+
               ₹${rupee(item["DP"])}
+
             </div>
 
           </div>
@@ -1134,11 +1297,15 @@ function renderItem(item){
           <div class="price-box mrp">
 
             <div class="price-label">
+
               MRP
+
             </div>
 
             <div class="price">
+
               ₹${rupee(item["MRP"])}
+
             </div>
 
           </div>
@@ -1162,6 +1329,7 @@ function renderItem(item){
 
           </div>
 
+
           <span>
             QUANTITY BASED OFFER
           </span>
@@ -1170,11 +1338,12 @@ function renderItem(item){
 
 
         <div class="offer-row">
+
           ${offerHTML}
+
         </div>
 
       </div>
-
 
     </div>
 
@@ -1204,15 +1373,21 @@ function searchByCategory(){
     categorySelect.value;
 
   const box =
-    document.getElementById("categoryResults");
+    document.getElementById(
+      "categoryResults"
+    );
 
-  document.getElementById("result")
-    .style.display = "none";
+
+  document.getElementById(
+    "result"
+  ).style.display = "none";
 
 
   if(!category){
 
-    box.style.display = "none";
+    box.style.display =
+      "none";
+
     return;
 
   }
@@ -1246,20 +1421,36 @@ function searchByCategory(){
         offers.map(offer => {
 
           return `
+
             <div class="cat-offer">
+
               ${offer.q}
-              → <b>₹${rupee(offer.p)}</b>
+              →
+
+              <b>
+                ₹${rupee(offer.p)}
+              </b>
+
             </div>
+
           `;
 
         }).join("");
 
     }else{
 
-      offersHTML =
-        `<span style="font-size:11px;color:#929ca8">
+      offersHTML = `
+
+        <span style="
+          font-size:11px;
+          color:#929ca8;
+        ">
+
           No scheme
-        </span>`;
+
+        </span>
+
+      `;
 
     }
 
@@ -1273,24 +1464,33 @@ function searchByCategory(){
           ${item["ITEM NAME"] || "-"}
 
           <span class="cat-code">
-            CODE : ${item["CODE"] || "-"}
+
+            CODE :
+            ${item["CODE"] || "-"}
+
           </span>
 
         </div>
 
 
         <div class="cat-price">
+
           ₹${rupee(item["DP"])}
+
         </div>
 
 
         <div class="cat-mrp">
+
           ₹${rupee(item["MRP"])}
+
         </div>
 
 
         <div class="cat-offers">
+
           ${offersHTML}
+
         </div>
 
       </div>
@@ -1319,10 +1519,21 @@ function searchByCategory(){
 
       <div class="table-head">
 
-        <div>PRODUCT</div>
-        <div>DP</div>
-        <div>MRP</div>
-        <div>SCHEME</div>
+        <div>
+          PRODUCT
+        </div>
+
+        <div>
+          DP
+        </div>
+
+        <div>
+          MRP
+        </div>
+
+        <div>
+          SCHEME
+        </div>
 
       </div>
 
@@ -1340,11 +1551,14 @@ function searchByCategory(){
 
 function clearAll(){
 
-  document.getElementById("result")
-    .style.display = "none";
+  document.getElementById(
+    "result"
+  ).style.display = "none";
 
-  document.getElementById("categoryResults")
-    .style.display = "none";
+
+  document.getElementById(
+    "categoryResults"
+  ).style.display = "none";
 
 }
 
@@ -1354,13 +1568,19 @@ function clearAll(){
 function showNotFound(){
 
   const result =
-    document.getElementById("result");
+    document.getElementById(
+      "result"
+    );
+
 
   result.style.display =
     "block";
 
-  document.getElementById("categoryResults")
-    .style.display = "none";
+
+  document.getElementById(
+    "categoryResults"
+  ).style.display =
+    "none";
 
 
   result.innerHTML = `
@@ -1374,7 +1594,10 @@ function showNotFound(){
         margin-top:8px;
         color:#929daa;
       ">
-        Please check product code or name.
+
+        Please check product code
+        or name.
+
       </div>
 
     </div>
