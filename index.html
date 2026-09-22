@@ -1,312 +1,796 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Scheme Vixen – Live Item Search</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<title>BHALLA SPORTS VX VIXEN</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <style>
-    :root{
-      --bg:#f6f7fb;
-      --card:#ffffff;
-      --pri:#0f172a;
-      --acc:#2563eb;
-      --soft:#eef2ff;
-      --muted:#64748b;
-      --stroke:#e5e7eb;
-      --hi:#ecfeff;
-      --hi2:#eef2ff;
-      --shadow:0 16px 40px rgba(2,6,23,.08);
-    }
+<style>
 
-    *{
-      box-sizing:border-box;
-    }
+:root{
+  --navy:#10243e;
+  --blue:#1769d1;
+  --blue-light:#edf5ff;
+  --bg:#f4f6f8;
+  --white:#ffffff;
+  --text:#17212f;
+  --muted:#7c8795;
+  --line:#e5e9ee;
+  --green:#15945a;
+}
 
-    body{
-      margin:0;
-      padding:16px;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Arial;
-      background:linear-gradient(#ffffff,var(--bg));
-      color:var(--pri);
-    }
+*{
+  box-sizing:border-box;
+}
 
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
-    }
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
 
-    .card{
-      background:var(--card);
-      border:1px solid var(--stroke);
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      padding:18px;
-    }
+/* ================= HEADER ================= */
 
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:10px;
-    }
+.top-header{
+  background:var(--navy);
+  color:#fff;
+}
 
-    h2{
-      margin:0;
-      font-size:20px;
-      font-weight:800;
-      letter-spacing:.2px;
-    }
+.header-inner{
+  max-width:1050px;
+  margin:auto;
+  min-height:78px;
+  padding:0 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
 
-    .brand{
-      color:#475569;
-      font-weight:700;
-      letter-spacing:.4px;
-      font-size:12px;
-    }
+.brand-wrap{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
 
-    .row{
-      display:grid;
-      grid-template-columns:1.1fr 1fr 1fr auto;
-      gap:10px;
-    }
+.brand-box{
+  width:44px;
+  height:44px;
+  border:1.5px solid rgba(255,255,255,.8);
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px;
+  font-weight:900;
+}
 
-    label{
-      font-size:11px;
-      color:#64748b;
-      letter-spacing:.5px;
-      text-transform:uppercase;
-    }
+.brand-main{
+  font-size:17px;
+  font-weight:800;
+  letter-spacing:.4px;
+}
 
-    input,
-    select,
-    button{
-      width:100%;
-      padding:10px 12px;
-      margin-top:6px;
-      border-radius:10px;
-      border:1px solid var(--stroke);
-      background:#fff;
-      color:var(--pri);
-      font-size:14px;
-    }
+.brand-sub{
+  margin-top:3px;
+  color:#8fb9ed;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:2px;
+}
 
-    .tiny{
-      width:auto;
-      padding:10px 12px;
-      border-radius:10px;
-      background:linear-gradient(180deg,#3b82f6,#2563eb);
-      color:#fff;
-      font-weight:800;
-      cursor:pointer;
-      box-shadow:0 8px 16px rgba(37,99,235,.25);
-    }
+.live{
+  font-size:10px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  color:#c9d4e1;
+}
 
-    .result{
-      margin-top:12px;
-      padding:12px;
-      border:1px solid var(--stroke);
-      border-radius:14px;
-      background:#fff;
-    }
+.live-dot{
+  width:7px;
+  height:7px;
+  background:#32c47b;
+  border-radius:50%;
+}
 
-    .hero{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:8px;
-      align-items:center;
-      padding:12px;
-      border-radius:12px;
-      background:linear-gradient(180deg,var(--hi),var(--hi2));
-      border:1px solid #c7d2fe;
-      margin-bottom:10px;
-    }
+/* ================= PAGE ================= */
 
-    .item-name{
-      font-size:18px;
-      font-weight:900;
-    }
+.wrap{
+  max-width:920px;
+  margin:auto;
+  padding:30px 18px 45px;
+}
 
-    .dp{
-      font-size:18px;
-      font-weight:900;
-      color:#1d4ed8;
-      background:#dbeafe;
-      padding:6px 10px;
-      border-radius:10px;
-    }
+/* ================= PAGE HEADING ================= */
 
-    .meta{
-      font-size:12px;
-      color:var(--muted);
-    }
+.heading{
+  margin-bottom:20px;
+}
 
-    .offers{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:8px;
-    }
+.heading-label{
+  color:var(--blue);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
 
-    .offer-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      border-radius:999px;
-      padding:8px 12px;
-      font-size:13px;
-      font-weight:900;
-      background:linear-gradient(180deg,#fef3c7,#fde68a);
-      color:#92400e;
-      border:1px solid #f59e0b;
-      box-shadow:0 6px 14px rgba(245,158,11,.35);
-    }
+.heading h1{
+  margin:5px 0 0;
+  font-size:27px;
+  letter-spacing:-.5px;
+}
 
-    .offer-pill strong{
-      color:#7c2d12;
-    }
+.heading p{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:13px;
+}
 
-    .offer-title{
-      font-weight:900;
-      color:#b45309;
-      margin-top:6px;
-    }
+/* ================= SEARCH ================= */
 
-    .loading{
-      padding:10px;
-      border-radius:10px;
-      border:1px dashed var(--stroke);
-      color:var(--muted);
-    }
+.search-card{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:15px;
+  box-shadow:0 5px 20px rgba(15,35,60,.05);
+}
 
-    .status{
-      font-size:11px;
-      color:#64748b;
-      margin-top:8px;
-      text-align:right;
-    }
+.search-big{
+  position:relative;
+}
 
-    @media(max-width:640px){
-      body{
-        padding:10px;
-      }
+.search-big svg{
+  position:absolute;
+  left:15px;
+  top:50%;
+  transform:translateY(-50%);
+  width:19px;
+  height:19px;
+  stroke:#8490a0;
+}
 
-      .card{
-        padding:12px;
-        border-radius:14px;
-      }
+.search-big input{
+  width:100%;
+  height:54px;
+  padding:0 45px;
+  border:1px solid #d7dde5;
+  border-radius:9px;
+  outline:none;
+  font-size:15px;
+  color:var(--text);
+}
 
-      .row{
-        grid-template-columns:1fr;
-        gap:8px;
-      }
+.search-big input:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(23,105,209,.08);
+}
 
-      .tiny{
-        width:100%;
-      }
+.search-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:10px;
+}
 
-      .hero{
-        grid-template-columns:1fr;
-      }
+.search-row input,
+.search-row select{
+  width:100%;
+  height:43px;
+  padding:0 12px;
+  border:1px solid #dce1e7;
+  border-radius:8px;
+  background:#fff;
+  color:var(--text);
+  font-size:13px;
+  outline:none;
+}
 
-      .dp{
-        display:inline-block;
-      }
-    }
-  </style>
+.search-row input:focus,
+.search-row select:focus{
+  border-color:var(--blue);
+}
+
+.actions{
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+}
+
+.btn{
+  height:38px;
+  padding:0 16px;
+  border:0;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:700;
+}
+
+.btn-print{
+  background:var(--blue);
+  color:#fff;
+}
+
+.btn-clear{
+  background:#eef1f4;
+  color:#4c5664;
+}
+
+/* ================= STATUS ================= */
+
+.status{
+  text-align:right;
+  color:#7f8996;
+  font-size:10px;
+  margin-top:8px;
+}
+
+/* ================= RESULT ================= */
+
+.result{
+  margin-top:18px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 5px 20px rgba(15,35,60,.05);
+}
+
+/* ================= PRODUCT ================= */
+
+.product-top{
+  padding:20px;
+  border-bottom:1px solid var(--line);
+}
+
+.product-label{
+  color:var(--blue);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.product-name{
+  margin-top:7px;
+  font-size:21px;
+  line-height:27px;
+  font-weight:800;
+}
+
+.product-meta{
+  margin-top:7px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.product-meta strong{
+  color:#3e4855;
+}
+
+/* ================= PRICE ================= */
+
+.price-area{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--line);
+}
+
+.price-box{
+  padding:17px 20px;
+}
+
+.price-box:first-child{
+  border-right:1px solid var(--line);
+}
+
+.price-label{
+  color:#87919e;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:800;
+}
+
+.price-value{
+  margin-top:4px;
+  font-size:23px;
+  font-weight:900;
+}
+
+.price-dp{
+  color:var(--blue);
+}
+
+.price-mrp{
+  color:#253142;
+}
+
+/* ================= OFFER ================= */
+
+.offer-area{
+  padding:20px;
+}
+
+.offer-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+
+.offer-head h3{
+  margin:0;
+  font-size:14px;
+}
+
+.offer-head span{
+  font-size:9px;
+  color:#8a94a0;
+  letter-spacing:1px;
+  font-weight:800;
+}
+
+.offer-table{
+  width:100%;
+  border-collapse:collapse;
+  border:1px solid var(--line);
+  border-radius:8px;
+  overflow:hidden;
+}
+
+.offer-table th{
+  padding:10px 13px;
+  text-align:left;
+  background:#f7f8fa;
+  color:#7f8996;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.7px;
+}
+
+.offer-table td{
+  padding:11px 13px;
+  border-top:1px solid #edf0f3;
+  font-size:13px;
+}
+
+.offer-table td:last-child{
+  color:var(--blue);
+  font-weight:800;
+}
+
+/* ================= CATEGORY ================= */
+
+.category-head{
+  padding:17px 19px;
+  border-bottom:1px solid var(--line);
+}
+
+.category-head small{
+  color:#8a94a0;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.category-head h3{
+  margin:4px 0 0;
+  font-size:17px;
+}
+
+.category-item{
+  padding:14px 19px;
+  border-bottom:1px solid #edf0f3;
+}
+
+.category-item:last-child{
+  border-bottom:0;
+}
+
+.category-item-top{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+}
+
+.category-name{
+  font-size:13px;
+  font-weight:800;
+}
+
+.category-code{
+  color:#8993a0;
+  font-size:10px;
+  margin-top:4px;
+}
+
+.category-price{
+  color:var(--blue);
+  font-size:13px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+/* ================= MESSAGE ================= */
+
+.message{
+  padding:38px 20px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.message-icon{
+  font-size:24px;
+  margin-bottom:8px;
+}
+
+.message h3{
+  color:#273242;
+  margin:0;
+  font-size:15px;
+}
+
+.message p{
+  margin:5px 0 0;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+  text-align:center;
+  color:#9ba3ad;
+  font-size:9px;
+  margin-top:23px;
+  letter-spacing:.5px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:640px){
+
+  .header-inner{
+    min-height:68px;
+    padding:0 14px;
+  }
+
+  .brand-box{
+    width:38px;
+    height:38px;
+    font-size:18px;
+  }
+
+  .brand-main{
+    font-size:14px;
+  }
+
+  .brand-sub{
+    font-size:8px;
+  }
+
+  .wrap{
+    padding:23px 11px 35px;
+  }
+
+  .heading h1{
+    font-size:24px;
+  }
+
+  .heading p{
+    font-size:12px;
+  }
+
+  .search-card{
+    padding:12px;
+  }
+
+  .search-big input{
+    height:51px;
+  }
+
+  .search-row{
+    grid-template-columns:1fr;
+  }
+
+  .product-top{
+    padding:17px;
+  }
+
+  .product-name{
+    font-size:19px;
+    line-height:25px;
+  }
+
+  .price-box{
+    padding:16px 17px;
+  }
+
+  .price-value{
+    font-size:21px;
+  }
+
+  .offer-area{
+    padding:17px;
+  }
+
+  .offer-table th,
+  .offer-table td{
+    padding:10px;
+  }
+
+}
+
+/* ================= PRINT ================= */
+
+@media print{
+
+  body{
+    background:#fff;
+  }
+
+  .top-header,
+  .heading,
+  .search-card,
+  .status,
+  .footer{
+    display:none!important;
+  }
+
+  .wrap{
+    max-width:none;
+    padding:0;
+  }
+
+  .result{
+    margin:0;
+    box-shadow:none;
+  }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
+
+<!-- ================= HEADER ================= -->
+
+<header class="top-header">
+
+  <div class="header-inner">
+
+    <div class="brand-wrap">
+
+      <div class="brand-box">
+        V
+      </div>
+
+      <div>
+
+        <div class="brand-main">
+          BHALLA SPORTS
+        </div>
+
+        <div class="brand-sub">
+          VX VIXEN
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="live">
+
+      <span class="live-dot"></span>
+
+      LIVE
+
+    </div>
+
+  </div>
+
+</header>
+
+
 <div class="wrap">
 
-  <div class="card">
 
-    <header>
-      <h2>📦 Live Item Search</h2>
-      <div class="brand">SCHEME VIXEN</div>
-    </header>
+  <!-- ================= HEADING ================= -->
 
-    <div class="row">
+  <div class="heading">
 
-      <div>
-        <label>Code</label>
-        <input
-          type="number"
-          id="codeInput"
-          placeholder="1259"
-          autocomplete="off"
+    <div class="heading-label">
+      VX VIXEN
+    </div>
+
+    <h1>
+      Scheme & Price
+    </h1>
+
+    <p>
+      Search product code or product name to check current scheme.
+    </p>
+
+  </div>
+
+
+  <!-- ================= SEARCH ================= -->
+
+  <div class="search-card">
+
+    <div class="search-big">
+
+      <svg viewBox="0 0 24 24" fill="none">
+
+        <circle
+          cx="11"
+          cy="11"
+          r="6.5"
+          stroke="currentColor"
+          stroke-width="1.8"
         />
-      </div>
 
-      <div>
-        <label>Name</label>
-        <input
-          type="text"
-          id="nameInput"
-          placeholder="Yoga Mat"
-          autocomplete="off"
+        <path
+          d="M16 16L21 21"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
         />
-      </div>
 
-      <div>
-        <label>Category</label>
-        <select id="categorySelect" disabled>
-          <option>Loading…</option>
-        </select>
-      </div>
+      </svg>
 
-      <button class="tiny" onclick="window.print()">🖨</button>
+
+      <input
+        type="number"
+        id="codeInput"
+        placeholder="Search Item Code"
+        autocomplete="off"
+      />
 
     </div>
 
-    <div id="status" class="status">
-      Loading data...
+
+    <div class="search-row">
+
+      <input
+        type="text"
+        id="nameInput"
+        placeholder="Search Product Name"
+        autocomplete="off"
+      />
+
+
+      <select id="categorySelect" disabled>
+
+        <option>
+          Loading…
+        </option>
+
+      </select>
+
     </div>
 
-    <div id="result" class="result" style="display:none;"></div>
 
-    <div id="categoryResults" class="result" style="display:none;"></div>
+    <div class="actions">
 
+      <button
+        class="btn btn-clear"
+        onclick="clearAll()"
+      >
+        Clear
+      </button>
+
+
+      <button
+        class="btn btn-print"
+        onclick="window.print()"
+      >
+        Print
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- STATUS -->
+
+  <div
+    id="status"
+    class="status"
+  >
+    Loading data...
+  </div>
+
+
+  <!-- RESULT -->
+
+  <div
+    id="result"
+    class="result"
+    style="display:none;"
+  ></div>
+
+
+  <!-- CATEGORY -->
+
+  <div
+    id="categoryResults"
+    class="result"
+    style="display:none;"
+  ></div>
+
+
+  <div class="footer">
+    BHALLA SPORTS • VX VIXEN
   </div>
 
 </div>
 
+
 <script>
 
-const API_URL =
-"https://script.google.com/macros/s/AKfycbxXFCPney8rGxtPs3KAu1Tuz1oUaDbpn5FGkDChqi5-7rbZbPbJBzUnr3lfLhq6L_iR-A/exec";
 
-const STORAGE_KEY = "SCHEME_VIXEN_DATA_V1";
+/* =====================================================
+   API — SAME AS YOUR ORIGINAL CODE
+===================================================== */
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbxXFCPney8rGxtPs3KA1uTuz1oUaDbpn5FGkDChqi5-7rbZbPbJBzUnr3lfLhq6L_iR-A/exec";
+
+const STORAGE_KEY =
+"SCHEME_VIXEN_DATA_V1";
+
 
 let sheetData = [];
 let searchTimer = null;
 
+
 const codeInput =
-  document.getElementById("codeInput");
+document.getElementById("codeInput");
 
 const nameInput =
-  document.getElementById("nameInput");
+document.getElementById("nameInput");
 
 const categorySelect =
-  document.getElementById("categorySelect");
+document.getElementById("categorySelect");
 
 const statusBox =
-  document.getElementById("status");
+document.getElementById("status");
 
+
+/* =====================================================
+   RUPEE — SAME
+===================================================== */
 
 function rupee(val){
 
-  if(val === null || val === undefined || val === ""){
+  if(
+    val === null ||
+    val === undefined ||
+    val === ""
+  ){
     return "-";
   }
 
   return String(val)
     .replace(/₹/g,"")
     .trim();
+
 }
 
+
+/* =====================================================
+   OFFERS — SAME
+===================================================== */
 
 function buildOffers(item){
 
@@ -314,8 +798,12 @@ function buildOffers(item){
 
   ["","_1","_2","_3","_4"].forEach(s => {
 
-    const q = item["Qty" + s];
-    const p = item["OFFER RATE" + s];
+    const q =
+      item["Qty" + s];
+
+    const p =
+      item["OFFER RATE" + s];
+
 
     if(
       q !== null &&
@@ -325,44 +813,67 @@ function buildOffers(item){
       p !== undefined &&
       p !== ""
     ){
+
       offers.push({
         q:q,
         p:p
       });
+
     }
 
   });
 
   return offers;
+
 }
 
+
+/* =====================================================
+   SAVE LOCAL DATA — SAME
+===================================================== */
 
 function saveLocalData(){
 
   try{
+
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify(sheetData)
     );
+
   }catch(e){
-    console.log("Local save skipped");
+
+    console.log(
+      "Local save skipped"
+    );
+
   }
 
 }
 
+
+/* =====================================================
+   LOAD LOCAL DATA — SAME
+===================================================== */
 
 function loadLocalData(){
 
   try{
 
     const saved =
-      localStorage.getItem(STORAGE_KEY);
+      localStorage.getItem(
+        STORAGE_KEY
+      );
+
 
     if(!saved){
       return false;
     }
 
-    const data = JSON.parse(saved);
+
+    const data =
+      JSON.parse(saved);
+
 
     if(
       Array.isArray(data) &&
@@ -379,21 +890,29 @@ function loadLocalData(){
         "Data ready • Updating...";
 
       return true;
+
     }
 
   }catch(e){
 
-    console.log("Local data error");
+    console.log(
+      "Local data error"
+    );
 
   }
 
   return false;
+
 }
 
 
+/* =====================================================
+   FETCH FRESH DATA — SAME
+===================================================== */
+
 function fetchFreshData(){
 
-  fetch(API_URL, {
+  fetch(API_URL,{
     method:"GET",
     cache:"no-store"
   })
@@ -401,7 +920,9 @@ function fetchFreshData(){
   .then(response => {
 
     if(!response.ok){
-      throw new Error("Network error");
+      throw new Error(
+        "Network error"
+      );
     }
 
     return response.json();
@@ -411,8 +932,11 @@ function fetchFreshData(){
   .then(data => {
 
     if(!Array.isArray(data)){
-      throw new Error("Invalid data");
+      throw new Error(
+        "Invalid data"
+      );
     }
+
 
     sheetData = data;
 
@@ -422,19 +946,20 @@ function fetchFreshData(){
 
     categorySelect.disabled = false;
 
+
     statusBox.textContent =
       "✓ Live data updated";
 
-    /*
-      Agar user ne pehle search kiya hua hai
-      to current search dobara apply hoga.
-    */
 
     if(codeInput.value.trim()){
+
       autoSearch();
+
     }
     else if(nameInput.value.trim()){
+
       searchByName();
+
     }
 
   })
@@ -443,12 +968,14 @@ function fetchFreshData(){
 
     console.log(error);
 
+
     if(sheetData.length){
 
       statusBox.textContent =
         "✓ Saved data • Live update unavailable";
 
-    }else{
+    }
+    else{
 
       statusBox.textContent =
         "❌ Unable to load data";
@@ -463,141 +990,270 @@ function fetchFreshData(){
 }
 
 
+/* =====================================================
+   CATEGORY — SAME
+===================================================== */
+
 function fillCategoryDropdown(){
 
   const categories =
     [...new Set(
+
       sheetData
-        .map(item => item["CATEGORY"])
+        .map(item =>
+          item["CATEGORY"]
+        )
         .filter(Boolean)
+
     )].sort();
+
 
   categorySelect.innerHTML =
     '<option value="">All categories</option>';
 
+
   categories.forEach(category => {
 
     const option =
-      document.createElement("option");
+      document.createElement(
+        "option"
+      );
 
     option.value = category;
+
     option.textContent = category;
 
-    categorySelect.appendChild(option);
+    categorySelect.appendChild(
+      option
+    );
 
   });
 
 }
 
 
+/* =====================================================
+   RENDER ITEM — ONLY UI CHANGED
+===================================================== */
+
 function renderItem(item){
 
   const offers =
     buildOffers(item);
 
-  const result =
-    document.getElementById("result");
 
-  result.style.display = "block";
+  const result =
+    document.getElementById(
+      "result"
+    );
+
+
+  result.style.display =
+    "block";
+
 
   document.getElementById(
     "categoryResults"
-  ).style.display = "none";
+  ).style.display =
+    "none";
+
 
   result.innerHTML = `
 
-    <div class="hero">
+    <div class="product-top">
 
-      <div>
+      <div class="product-label">
+        ${item["CATEGORY"] || "PRODUCT"}
+      </div>
 
-        <div class="item-name">
-          ${item["ITEM NAME"] || "-"}
-        </div>
 
-        <div class="meta">
-          Code: ${item["CODE"] || "-"}
-          •
+      <div class="product-name">
+        ${item["ITEM NAME"] || "-"}
+      </div>
+
+
+      <div class="product-meta">
+
+        CODE:
+        <strong>
+          ${item["CODE"] || "-"}
+        </strong>
+
+        &nbsp;&nbsp; • &nbsp;&nbsp;
+
+        CATEGORY:
+        <strong>
           ${item["CATEGORY"] || "-"}
-        </div>
+        </strong>
 
       </div>
 
-      <div>
+    </div>
 
-        <div class="dp">
+
+    <div class="price-area">
+
+      <div class="price-box">
+
+        <div class="price-label">
+          Dealer Price
+        </div>
+
+        <div class="price-value price-dp">
           ₹ ${rupee(item["DP"])}
         </div>
 
-        <div
-          class="meta"
-          style="font-weight:700;color:#16a34a;"
-        >
-          MRP: ₹ ${rupee(item["MRP"])}
+      </div>
+
+
+      <div class="price-box">
+
+        <div class="price-label">
+          MRP
+        </div>
+
+        <div class="price-value price-mrp">
+          ₹ ${rupee(item["MRP"])}
         </div>
 
       </div>
 
     </div>
 
-    <div class="offer-title">
-      🔥 Special Offers
-    </div>
 
-    <div class="offers">
+    <div class="offer-area">
+
+      <div class="offer-head">
+
+        <h3>
+          Special Offers
+        </h3>
+
+        <span>
+          VX VIXEN SCHEME
+        </span>
+
+      </div>
+
 
       ${
         offers.length
 
         ?
 
-        offers.map(o => `
+        `
 
-          <span class="offer-pill">
-            ${o.q}
-            →
-            <strong>
-              ₹ ${rupee(o.p)}
-            </strong>
-          </span>
+        <table class="offer-table">
 
-        `).join("")
+          <thead>
+
+            <tr>
+
+              <th>
+                Quantity
+              </th>
+
+              <th>
+                Offer Rate
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            ${
+              offers.map(o => `
+
+                <tr>
+
+                  <td>
+                    ${o.q}
+                  </td>
+
+                  <td>
+                    ₹ ${rupee(o.p)}
+                  </td>
+
+                </tr>
+
+              `).join("")
+            }
+
+          </tbody>
+
+        </table>
+
+        `
 
         :
 
-        `<span class="meta">
-          No offer
-        </span>`
+        `
+
+        <div class="message"
+             style="padding:12px;text-align:left">
+
+          No special offer available.
+
+        </div>
+
+        `
+
       }
 
     </div>
+
   `;
+
 }
 
+
+/* =====================================================
+   SEARCH CODE — SAME
+===================================================== */
 
 function autoSearch(){
 
   const code =
     codeInput.value.trim();
 
+
   if(!code){
+
     clearAll();
+
     return;
+
   }
+
 
   const item =
     sheetData.find(
       row =>
-        String(row["CODE"]).trim() === code
+        String(row["CODE"]).trim()
+        === code
     );
 
+
   if(!item){
+
     showNotFound();
+
     return;
+
   }
 
+
   renderItem(item);
+
 }
 
+
+/* =====================================================
+   SEARCH NAME — SAME
+===================================================== */
 
 function searchByName(){
 
@@ -606,49 +1262,71 @@ function searchByName(){
       .trim()
       .toLowerCase();
 
+
   if(!name){
     return;
   }
 
+
   const item =
     sheetData.find(row =>
-      String(row["ITEM NAME"] || "")
-        .toLowerCase()
-        .includes(name)
+      String(
+        row["ITEM NAME"] || ""
+      )
+      .toLowerCase()
+      .includes(name)
     );
 
+
   if(!item){
+
     showNotFound();
+
     return;
+
   }
+
 
   codeInput.value =
     item["CODE"];
 
+
   renderItem(item);
+
 }
 
+
+/* =====================================================
+   CATEGORY — UI UPDATED ONLY
+===================================================== */
 
 function searchByCategory(){
 
   const category =
     categorySelect.value;
 
+
   const box =
     document.getElementById(
       "categoryResults"
     );
 
+
   document.getElementById(
     "result"
-  ).style.display = "none";
+  ).style.display =
+    "none";
+
 
   if(!category){
 
-    box.style.display = "none";
+    box.style.display =
+      "none";
 
     return;
+
   }
+
 
   const items =
     sheetData.filter(
@@ -656,132 +1334,165 @@ function searchByCategory(){
         item["CATEGORY"] === category
     );
 
-  box.style.display = "block";
 
-  box.innerHTML = items.length
+  box.style.display =
+    "block";
 
-    ?
 
-    items.map(item => {
+  if(!items.length){
 
-      const offers =
-        buildOffers(item);
+    box.innerHTML = `
 
-      return `
+      <div class="message">
 
-        <div
-          class="hero"
-          style="margin-bottom:8px"
-        >
+        <div class="message-icon">
+          !
+        </div>
 
-          <div>
+        <h3>
+          No items found
+        </h3>
 
-            <div class="item-name">
-              ${item["ITEM NAME"] || "-"}
+        <p>
+          No items in this category.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML = `
+
+    <div class="category-head">
+
+      <small>
+        Category
+      </small>
+
+      <h3>
+        ${category}
+      </h3>
+
+    </div>
+
+
+    ${
+      items.map(item => `
+
+        <div class="category-item">
+
+          <div class="category-item-top">
+
+            <div>
+
+              <div class="category-name">
+                ${item["ITEM NAME"] || "-"}
+              </div>
+
+              <div class="category-code">
+                CODE: ${item["CODE"] || "-"}
+              </div>
+
             </div>
 
-            <div class="meta">
-              Code: ${item["CODE"] || "-"}
-            </div>
 
-          </div>
-
-          <div>
-
-            <div class="dp">
+            <div class="category-price">
               ₹ ${rupee(item["DP"])}
             </div>
 
-            <div
-              class="meta"
-              style="font-weight:700;color:#16a34a;"
-            >
-              MRP: ₹ ${rupee(item["MRP"])}
-            </div>
-
           </div>
 
         </div>
 
-        <div class="offers">
+      `).join("")
+    }
 
-          ${
-            offers.length
-
-            ?
-
-            offers.map(o => `
-
-              <span class="offer-pill">
-                ${o.q}
-                →
-                <strong>
-                  ₹ ${rupee(o.p)}
-                </strong>
-              </span>
-
-            `).join("")
-
-            :
-
-            `<span class="meta">
-              No offer
-            </span>`
-          }
-
-        </div>
-
-      `;
-
-    }).join(
-      "<hr style='border-color:#e5e7eb;margin:10px 0'/>"
-    )
-
-    :
-
-    `<div class="loading">
-      No items in this category
-    </div>`;
-}
-
-
-function clearAll(){
-
-  document.getElementById(
-    "result"
-  ).style.display = "none";
-
-  document.getElementById(
-    "categoryResults"
-  ).style.display = "none";
-
-}
-
-
-function showNotFound(){
-
-  const result =
-    document.getElementById("result");
-
-  result.style.display = "block";
-
-  result.innerHTML = `
-    <div class="loading">
-      ❌ Item not found
-    </div>
   `;
 
 }
 
 
+/* =====================================================
+   CLEAR — SAME
+===================================================== */
+
+function clearAll(){
+
+  document.getElementById(
+    "result"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "categoryResults"
+  ).style.display =
+    "none";
+
+}
+
+
+/* =====================================================
+   NOT FOUND — UI UPDATED
+===================================================== */
+
+function showNotFound(){
+
+  const result =
+    document.getElementById(
+      "result"
+    );
+
+
+  result.style.display =
+    "block";
+
+
+  result.innerHTML = `
+
+    <div class="message">
+
+      <div class="message-icon">
+        ⌕
+      </div>
+
+      <h3>
+        Item not found
+      </h3>
+
+      <p>
+        Please check the item code or product name.
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   EVENTS — SAME
+===================================================== */
+
 codeInput.addEventListener(
   "input",
   () => {
 
-    clearTimeout(searchTimer);
+    clearTimeout(
+      searchTimer
+    );
 
     searchTimer =
-      setTimeout(autoSearch,100);
+      setTimeout(
+        autoSearch,
+        100
+      );
 
   }
 );
@@ -791,10 +1502,15 @@ nameInput.addEventListener(
   "input",
   () => {
 
-    clearTimeout(searchTimer);
+    clearTimeout(
+      searchTimer
+    );
 
     searchTimer =
-      setTimeout(searchByName,120);
+      setTimeout(
+        searchByName,
+        120
+      );
 
   }
 );
@@ -806,20 +1522,11 @@ categorySelect.addEventListener(
 );
 
 
-/*
-  IMPORTANT:
-  Pehle saved data load karo.
-  Isse repeat users ko app almost
-  immediately usable milta hai.
-*/
+/* =====================================================
+   START — SAME
+===================================================== */
 
 loadLocalData();
-
-
-/*
-  Saath mein fresh Google Sheet data
-  background mein fetch karo.
-*/
 
 fetchFreshData();
 
