@@ -4,224 +4,826 @@
   <meta charset="UTF-8" />
   <title>Scheme Vixen – Live Item Search</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <style>
     :root{
-      --bg:#f6f7fb; --card:#ffffff; --pri:#0f172a; --acc:#2563eb;
-      --soft:#eef2ff; --muted:#64748b; --stroke:#e5e7eb;
-      --hi:#ecfeff; --hi2:#eef2ff; --shadow:0 16px 40px rgba(2,6,23,.08);
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --pri:#0f172a;
+      --acc:#2563eb;
+      --soft:#eef2ff;
+      --muted:#64748b;
+      --stroke:#e5e7eb;
+      --hi:#ecfeff;
+      --hi2:#eef2ff;
+      --shadow:0 16px 40px rgba(2,6,23,.08);
     }
-    *{ box-sizing:border-box; }
-    body{ margin:0; padding:16px; font-family: Inter, system-ui, -apple-system, Segoe UI, Arial;
-      background: linear-gradient(#ffffff, var(--bg)); color:var(--pri); }
-    .wrap{ max-width:1100px; margin:0 auto; }
-    .card{ background:var(--card); border:1px solid var(--stroke); border-radius:18px;
-      box-shadow:var(--shadow); padding:18px; }
-    header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
-    h2{ margin:0; font-size:20px; font-weight:800; letter-spacing:.2px; }
-    .brand{ color:#475569; font-weight:700; letter-spacing:.4px; font-size:12px; }
-    .row{ display:grid; grid-template-columns: 1.1fr 1fr 1fr auto; gap:10px; }
-    label{ font-size:11px; color:#64748b; letter-spacing:.5px; text-transform:uppercase; }
-    input, select, button{ width:100%; padding:10px 12px; margin-top:6px;
-      border-radius:10px; border:1px solid var(--stroke); background:#fff; color:var(--pri); font-size:14px; }
-    .tiny{ width:auto; padding:10px 12px; border-radius:10px; background: linear-gradient(180deg, #3b82f6, #2563eb);
-      color:#fff; font-weight:800; cursor:pointer; box-shadow:0 8px 16px rgba(37,99,235,.25); }
-    .result{ margin-top:12px; padding:12px; border:1px solid var(--stroke); border-radius:14px; background:#fff; }
-    .hero{ display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center;
-      padding:12px; border-radius:12px; background: linear-gradient(180deg, var(--hi), var(--hi2));
-      border:1px solid #c7d2fe; margin-bottom:10px; }
-    .item-name{ font-size:18px; font-weight:900; }
-    .dp{ font-size:18px; font-weight:900; color:#1d4ed8; background:#dbeafe; padding:6px 10px; border-radius:10px; }
-    .meta{ font-size:12px; color:var(--muted); }
 
-    .offers{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    *{
+      box-sizing:border-box;
+    }
+
+    body{
+      margin:0;
+      padding:16px;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Arial;
+      background:linear-gradient(#ffffff,var(--bg));
+      color:var(--pri);
+    }
+
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--stroke);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+
+    h2{
+      margin:0;
+      font-size:20px;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+
+    .brand{
+      color:#475569;
+      font-weight:700;
+      letter-spacing:.4px;
+      font-size:12px;
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns:1.1fr 1fr 1fr auto;
+      gap:10px;
+    }
+
+    label{
+      font-size:11px;
+      color:#64748b;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+    }
+
+    input,
+    select,
+    button{
+      width:100%;
+      padding:10px 12px;
+      margin-top:6px;
+      border-radius:10px;
+      border:1px solid var(--stroke);
+      background:#fff;
+      color:var(--pri);
+      font-size:14px;
+    }
+
+    .tiny{
+      width:auto;
+      padding:10px 12px;
+      border-radius:10px;
+      background:linear-gradient(180deg,#3b82f6,#2563eb);
+      color:#fff;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 8px 16px rgba(37,99,235,.25);
+    }
+
+    .result{
+      margin-top:12px;
+      padding:12px;
+      border:1px solid var(--stroke);
+      border-radius:14px;
+      background:#fff;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:8px;
+      align-items:center;
+      padding:12px;
+      border-radius:12px;
+      background:linear-gradient(180deg,var(--hi),var(--hi2));
+      border:1px solid #c7d2fe;
+      margin-bottom:10px;
+    }
+
+    .item-name{
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .dp{
+      font-size:18px;
+      font-weight:900;
+      color:#1d4ed8;
+      background:#dbeafe;
+      padding:6px 10px;
+      border-radius:10px;
+    }
+
+    .meta{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .offers{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:8px;
+    }
+
     .offer-pill{
-      display:inline-flex; align-items:center; gap:6px;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
       border-radius:999px;
       padding:8px 12px;
       font-size:13px;
       font-weight:900;
-      background: linear-gradient(180deg, #fef3c7, #fde68a);
+      background:linear-gradient(180deg,#fef3c7,#fde68a);
       color:#92400e;
       border:1px solid #f59e0b;
       box-shadow:0 6px 14px rgba(245,158,11,.35);
     }
-    .offer-pill strong{ color:#7c2d12; }
-    .offer-title{ font-weight:900; color:#b45309; margin-top:6px; }
-    .loading{ padding:10px; border-radius:10px; border:1px dashed var(--stroke); color:var(--muted); }
 
-    @media (max-width: 640px){
-      body{ padding:10px; }
-      .card{ padding:12px; border-radius:14px; }
-      .row{ grid-template-columns: 1fr; gap:8px; }
-      .tiny{ width:100%; }
+    .offer-pill strong{
+      color:#7c2d12;
+    }
+
+    .offer-title{
+      font-weight:900;
+      color:#b45309;
+      margin-top:6px;
+    }
+
+    .loading{
+      padding:10px;
+      border-radius:10px;
+      border:1px dashed var(--stroke);
+      color:var(--muted);
+    }
+
+    .status{
+      font-size:11px;
+      color:#64748b;
+      margin-top:8px;
+      text-align:right;
+    }
+
+    @media(max-width:640px){
+      body{
+        padding:10px;
+      }
+
+      .card{
+        padding:12px;
+        border-radius:14px;
+      }
+
+      .row{
+        grid-template-columns:1fr;
+        gap:8px;
+      }
+
+      .tiny{
+        width:100%;
+      }
+
+      .hero{
+        grid-template-columns:1fr;
+      }
+
+      .dp{
+        display:inline-block;
+      }
     }
   </style>
 </head>
+
 <body>
+
 <div class="wrap">
+
   <div class="card">
+
     <header>
       <h2>📦 Live Item Search</h2>
       <div class="brand">SCHEME VIXEN</div>
     </header>
 
     <div class="row">
+
       <div>
         <label>Code</label>
-        <input type="number" id="codeInput" placeholder="1259" />
+        <input
+          type="number"
+          id="codeInput"
+          placeholder="1259"
+          autocomplete="off"
+        />
       </div>
+
       <div>
         <label>Name</label>
-        <input type="text" id="nameInput" placeholder="Yoga Mat" />
+        <input
+          type="text"
+          id="nameInput"
+          placeholder="Yoga Mat"
+          autocomplete="off"
+        />
       </div>
+
       <div>
         <label>Category</label>
         <select id="categorySelect" disabled>
           <option>Loading…</option>
         </select>
       </div>
+
       <button class="tiny" onclick="window.print()">🖨</button>
+
+    </div>
+
+    <div id="status" class="status">
+      Loading data...
     </div>
 
     <div id="result" class="result" style="display:none;"></div>
+
     <div id="categoryResults" class="result" style="display:none;"></div>
+
   </div>
+
 </div>
 
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbxXFCPney8rGxtPs3KAu1Tuz1oUaDbpn5FGkDChqi5-7rbZbPbJBzUnr3lfLhq6L_iR-A/exec";
-  let sheetData = [];
 
-  const codeInput = document.getElementById("codeInput");
-  const nameInput = document.getElementById("nameInput");
-  const categorySelect = document.getElementById("categorySelect");
+const API_URL =
+"https://script.google.com/macros/s/AKfycbxXFCPney8rGxtPs3KAu1Tuz1oUaDbpn5FGkDChqi5-7rbZbPbJBzUnr3lfLhq6L_iR-A/exec";
 
-  function rupee(val){
-    if (!val) return "-";
-    return String(val).replace(/₹/g, "").trim();
+const STORAGE_KEY = "SCHEME_VIXEN_DATA_V1";
+
+let sheetData = [];
+let searchTimer = null;
+
+const codeInput =
+  document.getElementById("codeInput");
+
+const nameInput =
+  document.getElementById("nameInput");
+
+const categorySelect =
+  document.getElementById("categorySelect");
+
+const statusBox =
+  document.getElementById("status");
+
+
+function rupee(val){
+
+  if(val === null || val === undefined || val === ""){
+    return "-";
   }
 
-  function buildOffers(item){
-    const offers = [];
-    ["", "_1", "_2", "_3", "_4"].forEach(s => {
-      const q = item["Qty" + s];
-      const p = item["OFFER RATE" + s];
-      if (q && p) offers.push({ q, p });
-    });
-    return offers;
+  return String(val)
+    .replace(/₹/g,"")
+    .trim();
+}
+
+
+function buildOffers(item){
+
+  const offers = [];
+
+  ["","_1","_2","_3","_4"].forEach(s => {
+
+    const q = item["Qty" + s];
+    const p = item["OFFER RATE" + s];
+
+    if(
+      q !== null &&
+      q !== undefined &&
+      q !== "" &&
+      p !== null &&
+      p !== undefined &&
+      p !== ""
+    ){
+      offers.push({
+        q:q,
+        p:p
+      });
+    }
+
+  });
+
+  return offers;
+}
+
+
+function saveLocalData(){
+
+  try{
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(sheetData)
+    );
+  }catch(e){
+    console.log("Local save skipped");
   }
 
-  let t;
-  codeInput.addEventListener("input", () => { clearTimeout(t); t = setTimeout(autoSearch, 120); });
-  nameInput.addEventListener("input", () => { clearTimeout(t); t = setTimeout(searchByName, 160); });
-  categorySelect.addEventListener("change", searchByCategory);
+}
 
-  fetch(API_URL)
-    .then(r => r.json())
-    .then(data => {
-      sheetData = data || [];
+
+function loadLocalData(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(STORAGE_KEY);
+
+    if(!saved){
+      return false;
+    }
+
+    const data = JSON.parse(saved);
+
+    if(
+      Array.isArray(data) &&
+      data.length
+    ){
+
+      sheetData = data;
+
       fillCategoryDropdown();
+
       categorySelect.disabled = false;
-    })
-    .catch(() => { categorySelect.innerHTML = "<option>Error loading</option>"; });
 
-  function fillCategoryDropdown(){
-    const cats = [...new Set(sheetData.map(i => i["CATEGORY"]).filter(Boolean))].sort();
-    categorySelect.innerHTML = '<option value="">All categories</option>';
-    cats.forEach(c => {
-      const o = document.createElement("option");
-      o.value = c; o.textContent = c;
-      categorySelect.appendChild(o);
-    });
+      statusBox.textContent =
+        "Data ready • Updating...";
+
+      return true;
+    }
+
+  }catch(e){
+
+    console.log("Local data error");
+
   }
 
-  function renderItem(item){
-    const offers = buildOffers(item);
-    const res = document.getElementById("result");
-    res.style.display = "block";
-    document.getElementById("categoryResults").style.display = "none";
-    res.innerHTML = `
-      <div class="hero">
-        <div>
-          <div class="item-name">${item["ITEM NAME"]}</div>
-          <div class="meta">Code: ${item["CODE"]} • ${item["CATEGORY"]}</div>
+  return false;
+}
+
+
+function fetchFreshData(){
+
+  fetch(API_URL, {
+    method:"GET",
+    cache:"no-store"
+  })
+
+  .then(response => {
+
+    if(!response.ok){
+      throw new Error("Network error");
+    }
+
+    return response.json();
+
+  })
+
+  .then(data => {
+
+    if(!Array.isArray(data)){
+      throw new Error("Invalid data");
+    }
+
+    sheetData = data;
+
+    saveLocalData();
+
+    fillCategoryDropdown();
+
+    categorySelect.disabled = false;
+
+    statusBox.textContent =
+      "✓ Live data updated";
+
+    /*
+      Agar user ne pehle search kiya hua hai
+      to current search dobara apply hoga.
+    */
+
+    if(codeInput.value.trim()){
+      autoSearch();
+    }
+    else if(nameInput.value.trim()){
+      searchByName();
+    }
+
+  })
+
+  .catch(error => {
+
+    console.log(error);
+
+    if(sheetData.length){
+
+      statusBox.textContent =
+        "✓ Saved data • Live update unavailable";
+
+    }else{
+
+      statusBox.textContent =
+        "❌ Unable to load data";
+
+      categorySelect.innerHTML =
+        "<option>Unable to load</option>";
+
+    }
+
+  });
+
+}
+
+
+function fillCategoryDropdown(){
+
+  const categories =
+    [...new Set(
+      sheetData
+        .map(item => item["CATEGORY"])
+        .filter(Boolean)
+    )].sort();
+
+  categorySelect.innerHTML =
+    '<option value="">All categories</option>';
+
+  categories.forEach(category => {
+
+    const option =
+      document.createElement("option");
+
+    option.value = category;
+    option.textContent = category;
+
+    categorySelect.appendChild(option);
+
+  });
+
+}
+
+
+function renderItem(item){
+
+  const offers =
+    buildOffers(item);
+
+  const result =
+    document.getElementById("result");
+
+  result.style.display = "block";
+
+  document.getElementById(
+    "categoryResults"
+  ).style.display = "none";
+
+  result.innerHTML = `
+
+    <div class="hero">
+
+      <div>
+
+        <div class="item-name">
+          ${item["ITEM NAME"] || "-"}
         </div>
-        <div>
-          <div class="dp">₹ ${rupee(item["DP"])}</div>
-          <div class="meta" style="font-weight:700; color:#16a34a;">
-            MRP: ₹ ${rupee(item["MRP"])}
+
+        <div class="meta">
+          Code: ${item["CODE"] || "-"}
+          •
+          ${item["CATEGORY"] || "-"}
+        </div>
+
+      </div>
+
+      <div>
+
+        <div class="dp">
+          ₹ ${rupee(item["DP"])}
+        </div>
+
+        <div
+          class="meta"
+          style="font-weight:700;color:#16a34a;"
+        >
+          MRP: ₹ ${rupee(item["MRP"])}
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="offer-title">
+      🔥 Special Offers
+    </div>
+
+    <div class="offers">
+
+      ${
+        offers.length
+
+        ?
+
+        offers.map(o => `
+
+          <span class="offer-pill">
+            ${o.q}
+            →
+            <strong>
+              ₹ ${rupee(o.p)}
+            </strong>
+          </span>
+
+        `).join("")
+
+        :
+
+        `<span class="meta">
+          No offer
+        </span>`
+      }
+
+    </div>
+  `;
+}
+
+
+function autoSearch(){
+
+  const code =
+    codeInput.value.trim();
+
+  if(!code){
+    clearAll();
+    return;
+  }
+
+  const item =
+    sheetData.find(
+      row =>
+        String(row["CODE"]).trim() === code
+    );
+
+  if(!item){
+    showNotFound();
+    return;
+  }
+
+  renderItem(item);
+}
+
+
+function searchByName(){
+
+  const name =
+    nameInput.value
+      .trim()
+      .toLowerCase();
+
+  if(!name){
+    return;
+  }
+
+  const item =
+    sheetData.find(row =>
+      String(row["ITEM NAME"] || "")
+        .toLowerCase()
+        .includes(name)
+    );
+
+  if(!item){
+    showNotFound();
+    return;
+  }
+
+  codeInput.value =
+    item["CODE"];
+
+  renderItem(item);
+}
+
+
+function searchByCategory(){
+
+  const category =
+    categorySelect.value;
+
+  const box =
+    document.getElementById(
+      "categoryResults"
+    );
+
+  document.getElementById(
+    "result"
+  ).style.display = "none";
+
+  if(!category){
+
+    box.style.display = "none";
+
+    return;
+  }
+
+  const items =
+    sheetData.filter(
+      item =>
+        item["CATEGORY"] === category
+    );
+
+  box.style.display = "block";
+
+  box.innerHTML = items.length
+
+    ?
+
+    items.map(item => {
+
+      const offers =
+        buildOffers(item);
+
+      return `
+
+        <div
+          class="hero"
+          style="margin-bottom:8px"
+        >
+
+          <div>
+
+            <div class="item-name">
+              ${item["ITEM NAME"] || "-"}
+            </div>
+
+            <div class="meta">
+              Code: ${item["CODE"] || "-"}
+            </div>
+
           </div>
+
+          <div>
+
+            <div class="dp">
+              ₹ ${rupee(item["DP"])}
+            </div>
+
+            <div
+              class="meta"
+              style="font-weight:700;color:#16a34a;"
+            >
+              MRP: ₹ ${rupee(item["MRP"])}
+            </div>
+
+          </div>
+
         </div>
-      </div>
-      <div class="offer-title">🔥 Special Offers</div>
-      <div class="offers">
-        ${
-          offers.length
-            ? offers.map(o => `<span class="offer-pill">${o.q} → <strong>₹ ${rupee(o.p)}</strong></span>`).join("")
-            : `<span class="meta">No offer</span>`
-        }
-      </div>
-    `;
-  }
 
-  function autoSearch(){
-    const code = codeInput.value.trim();
-    if (!code) return clearAll();
-    const item = sheetData.find(r => String(r["CODE"]) === code);
-    if (!item) return showNotFound();
-    renderItem(item);
-  }
+        <div class="offers">
 
-  function searchByName(){
-    const name = nameInput.value.trim().toLowerCase();
-    if (!name) return;
-    const item = sheetData.find(r => (r["ITEM NAME"] || "").toLowerCase().includes(name));
-    if (!item) return showNotFound();
-    codeInput.value = item["CODE"];
-    renderItem(item);
-  }
+          ${
+            offers.length
 
-  function searchByCategory(){
-    const cat = categorySelect.value;
-    const box = document.getElementById("categoryResults");
-    document.getElementById("result").style.display = "none";
-    if (!cat) { box.style.display="none"; return; }
+            ?
 
-    const items = sheetData.filter(i => i["CATEGORY"] === cat);
-    box.style.display = "block";
-    box.innerHTML = items.length
-      ? items.map(item => {
-          const offers = buildOffers(item);
-          return `
-            <div class="hero" style="margin-bottom:8px">
-              <div>
-                <div class="item-name">${item["ITEM NAME"]}</div>
-                <div class="meta">Code: ${item["CODE"]}</div>
-              </div>
-              <div>
-                <div class="dp">₹ ${rupee(item["DP"])}</div>
-                <div class="meta" style="font-weight:700; color:#16a34a;">
-                  MRP: ₹ ${rupee(item["MRP"])}
-                </div>
-              </div>
-            </div>
-            <div class="offers">
-              ${offers.map(o => `<span class="offer-pill">${o.q} → <strong>₹ ${rupee(o.p)}</strong></span>`).join("") || `<span class="meta">No offer</span>`}
-            </div>
-          `;
-        }).join("<hr style='border-color:#e5e7eb;margin:10px 0'/>")
-      : `<div class="loading">No items in this category</div>`;
-  }
+            offers.map(o => `
 
-  function clearAll(){
-    document.getElementById("result").style.display = "none";
-    document.getElementById("categoryResults").style.display = "none";
+              <span class="offer-pill">
+                ${o.q}
+                →
+                <strong>
+                  ₹ ${rupee(o.p)}
+                </strong>
+              </span>
+
+            `).join("")
+
+            :
+
+            `<span class="meta">
+              No offer
+            </span>`
+          }
+
+        </div>
+
+      `;
+
+    }).join(
+      "<hr style='border-color:#e5e7eb;margin:10px 0'/>"
+    )
+
+    :
+
+    `<div class="loading">
+      No items in this category
+    </div>`;
+}
+
+
+function clearAll(){
+
+  document.getElementById(
+    "result"
+  ).style.display = "none";
+
+  document.getElementById(
+    "categoryResults"
+  ).style.display = "none";
+
+}
+
+
+function showNotFound(){
+
+  const result =
+    document.getElementById("result");
+
+  result.style.display = "block";
+
+  result.innerHTML = `
+    <div class="loading">
+      ❌ Item not found
+    </div>
+  `;
+
+}
+
+
+codeInput.addEventListener(
+  "input",
+  () => {
+
+    clearTimeout(searchTimer);
+
+    searchTimer =
+      setTimeout(autoSearch,100);
+
   }
-  function showNotFound(){
-    const res = document.getElementById("result");
-    res.style.display = "block";
-    res.innerHTML = `<div class="loading">❌ Item not found</div>`;
+);
+
+
+nameInput.addEventListener(
+  "input",
+  () => {
+
+    clearTimeout(searchTimer);
+
+    searchTimer =
+      setTimeout(searchByName,120);
+
   }
+);
+
+
+categorySelect.addEventListener(
+  "change",
+  searchByCategory
+);
+
+
+/*
+  IMPORTANT:
+  Pehle saved data load karo.
+  Isse repeat users ko app almost
+  immediately usable milta hai.
+*/
+
+loadLocalData();
+
+
+/*
+  Saath mein fresh Google Sheet data
+  background mein fetch karo.
+*/
+
+fetchFreshData();
+
 </script>
+
 </body>
 </html>
