@@ -1,334 +1,794 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Scheme Vixen – Live Item Search</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1f3a">
+<title>BHALLA SPORTS VX VIXEN</title>
 
-  <style>
-    :root{
-      --bg:#f6f7fb;
-      --card:#ffffff;
-      --pri:#0f172a;
-      --acc:#2563eb;
-      --soft:#eef2ff;
-      --muted:#64748b;
-      --stroke:#e5e7eb;
-      --hi:#ecfeff;
-      --hi2:#eef2ff;
-      --shadow:0 16px 40px rgba(2,6,23,.08);
-    }
+<style>
+:root{
+  --navy:#0b1f3a;
+  --blue:#1769e0;
+  --blue2:#0f56c7;
+  --light:#f5f7fa;
+  --border:#e3e7ed;
+  --text:#17202d;
+  --muted:#7b8491;
+  --green:#16834d;
+}
 
-    *{
-      box-sizing:border-box;
-    }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    body{
-      margin:0;
-      padding:16px;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Arial;
-      background:linear-gradient(#ffffff,var(--bg));
-      color:var(--pri);
-    }
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--light);
+  color:var(--text);
+  min-height:100vh;
+}
 
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
-    }
+/* ================= HEADER ================= */
 
-    .card{
-      background:var(--card);
-      border:1px solid var(--stroke);
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      padding:18px;
-    }
+.header{
+  background:var(--navy);
+  color:white;
+}
 
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:10px;
-    }
+.header-inner{
+  max-width:1050px;
+  margin:auto;
+  min-height:76px;
+  padding:0 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
 
-    h2{
-      margin:0;
-      font-size:20px;
-      font-weight:800;
-      letter-spacing:.2px;
-    }
+.logo-area{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
 
-    .brand{
-      color:#475569;
-      font-weight:700;
-      letter-spacing:.4px;
-      font-size:12px;
-    }
+.logo{
+  width:44px;
+  height:44px;
+  border:2px solid rgba(255,255,255,.85);
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px;
+  font-weight:900;
+  letter-spacing:-1px;
+}
 
-    .row{
-      display:grid;
-      grid-template-columns:1.1fr 1fr 1fr auto;
-      gap:10px;
-    }
+.company{
+  font-size:17px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
 
-    label{
-      font-size:11px;
-      color:#64748b;
-      letter-spacing:.5px;
-      text-transform:uppercase;
-    }
+.brand{
+  font-size:11px;
+  color:#8dbbff;
+  font-weight:800;
+  letter-spacing:2px;
+  margin-top:3px;
+}
 
-    input,
-    select,
-    button{
-      width:100%;
-      padding:10px 12px;
-      margin-top:6px;
-      border-radius:10px;
-      border:1px solid var(--stroke);
-      background:#fff;
-      color:var(--pri);
-      font-size:14px;
-    }
+.status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:11px;
+  color:#cbd7e8;
+}
 
-    .tiny{
-      width:auto;
-      padding:10px 12px;
-      border-radius:10px;
-      background:linear-gradient(180deg,#3b82f6,#2563eb);
-      color:#fff;
-      font-weight:800;
-      cursor:pointer;
-      box-shadow:0 8px 16px rgba(37,99,235,.25);
-    }
+.status-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#39c77b;
+}
 
-    .result{
-      margin-top:12px;
-      padding:12px;
-      border:1px solid var(--stroke);
-      border-radius:14px;
-      background:#fff;
-    }
+/* ================= MAIN ================= */
 
-    .hero{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:8px;
-      align-items:center;
-      padding:12px;
-      border-radius:12px;
-      background:linear-gradient(180deg,var(--hi),var(--hi2));
-      border:1px solid #c7d2fe;
-      margin-bottom:10px;
-    }
+.container{
+  width:100%;
+  max-width:900px;
+  margin:auto;
+  padding:34px 18px 45px;
+}
 
-    .item-name{
-      font-size:18px;
-      font-weight:900;
-    }
+/* ================= TITLE ================= */
 
-    .dp{
-      font-size:18px;
-      font-weight:900;
-      color:#1d4ed8;
-      background:#dbeafe;
-      padding:6px 10px;
-      border-radius:10px;
-    }
+.page-title{
+  margin-bottom:22px;
+}
 
-    .meta{
-      font-size:12px;
-      color:var(--muted);
-    }
+.page-title .small{
+  color:var(--blue);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
 
-    .offers{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:8px;
-    }
+.page-title h1{
+  font-size:28px;
+  line-height:34px;
+  margin-top:5px;
+  letter-spacing:-.7px;
+}
 
-    .offer-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      border-radius:999px;
-      padding:8px 12px;
-      font-size:13px;
-      font-weight:900;
-      background:linear-gradient(180deg,#fef3c7,#fde68a);
-      color:#92400e;
-      border:1px solid #f59e0b;
-      box-shadow:0 6px 14px rgba(245,158,11,.35);
-    }
+.page-title p{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:6px;
+}
 
-    .offer-pill strong{
-      color:#7c2d12;
-    }
+/* ================= SEARCH PANEL ================= */
 
-    .offer-title{
-      font-weight:900;
-      color:#b45309;
-      margin-top:6px;
-    }
+.search-panel{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  box-shadow:0 5px 18px rgba(12,32,60,.05);
+}
 
-    .loading{
-      padding:10px;
-      border-radius:10px;
-      border:1px dashed var(--stroke);
-      color:var(--muted);
-    }
+.search-box{
+  position:relative;
+}
 
-    .status{
-      font-size:11px;
-      color:#64748b;
-      margin-top:8px;
-      text-align:right;
-    }
+.search-box svg{
+  position:absolute;
+  left:16px;
+  top:50%;
+  transform:translateY(-50%);
+  width:19px;
+  height:19px;
+  stroke:#8b95a3;
+}
 
-    @media(max-width:640px){
-      body{
-        padding:10px;
-      }
+.search-input{
+  width:100%;
+  height:54px;
+  border:1px solid #d6dce5;
+  border-radius:10px;
+  padding:0 45px;
+  outline:none;
+  font-size:15px;
+  color:var(--text);
+  background:#fff;
+}
 
-      .card{
-        padding:12px;
-        border-radius:14px;
-      }
+.search-input::placeholder{
+  color:#9ba3ae;
+}
 
-      .row{
-        grid-template-columns:1fr;
-        gap:8px;
-      }
+.search-input:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(23,105,224,.09);
+}
 
-      .tiny{
-        width:100%;
-      }
+.filter-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:10px;
+}
 
-      .hero{
-        grid-template-columns:1fr;
-      }
+.field{
+  height:44px;
+  width:100%;
+  border:1px solid #dce1e8;
+  border-radius:9px;
+  padding:0 12px;
+  outline:none;
+  background:#fff;
+  color:#303947;
+  font-size:13px;
+}
 
-      .dp{
-        display:inline-block;
-      }
-    }
-  </style>
+.field:focus{
+  border-color:var(--blue);
+}
+
+.buttons{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.btn{
+  height:39px;
+  padding:0 16px;
+  border:0;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.clear-btn{
+  background:#eef1f5;
+  color:#4d5663;
+}
+
+.print-btn{
+  background:var(--blue);
+  color:#fff;
+}
+
+/* ================= RESULT ================= */
+
+#result{
+  margin-top:20px;
+}
+
+/* ================= PRODUCT ================= */
+
+.product{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 5px 18px rgba(12,32,60,.05);
+}
+
+.product-header{
+  padding:20px;
+  border-bottom:1px solid #edf0f3;
+}
+
+.product-label{
+  display:inline-block;
+  color:var(--blue);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+
+.product-name{
+  font-size:21px;
+  line-height:27px;
+  font-weight:800;
+  color:#111a27;
+}
+
+.product-info{
+  display:flex;
+  gap:18px;
+  margin-top:7px;
+  color:#808a97;
+  font-size:12px;
+}
+
+.product-info b{
+  color:#3c4654;
+}
+
+/* ================= PRICE ================= */
+
+.price-section{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-bottom:1px solid #edf0f3;
+}
+
+.price-item{
+  padding:18px 20px;
+}
+
+.price-item:first-child{
+  border-right:1px solid #edf0f3;
+}
+
+.price-label{
+  color:#858e9a;
+  font-size:10px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.9px;
+}
+
+.price-value{
+  margin-top:4px;
+  font-size:24px;
+  font-weight:800;
+}
+
+.dp{
+  color:var(--blue);
+}
+
+.mrp{
+  color:#202b3b;
+}
+
+/* ================= SCHEME ================= */
+
+.scheme{
+  padding:20px;
+}
+
+.scheme-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+
+.scheme-title h2{
+  font-size:15px;
+  font-weight:800;
+}
+
+.scheme-title span{
+  font-size:10px;
+  color:#87909d;
+  font-weight:700;
+  letter-spacing:.8px;
+}
+
+.scheme-table{
+  width:100%;
+  border-collapse:collapse;
+  border:1px solid var(--border);
+  border-radius:9px;
+  overflow:hidden;
+}
+
+.scheme-table th{
+  background:#f6f8fa;
+  color:#7e8793;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.7px;
+  text-align:left;
+  padding:10px 13px;
+}
+
+.scheme-table td{
+  padding:12px 13px;
+  border-top:1px solid #edf0f3;
+  font-size:13px;
+}
+
+.scheme-table td:last-child{
+  color:var(--blue);
+  font-weight:800;
+}
+
+/* ================= CATEGORY ================= */
+
+.category-box{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 5px 18px rgba(12,32,60,.05);
+}
+
+.category-head{
+  padding:17px 19px;
+  border-bottom:1px solid #edf0f3;
+}
+
+.category-head span{
+  display:block;
+  color:#8a93a0;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:700;
+}
+
+.category-head h2{
+  margin-top:4px;
+  font-size:18px;
+}
+
+.item{
+  min-height:65px;
+  padding:13px 19px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  border-bottom:1px solid #edf0f3;
+  cursor:pointer;
+}
+
+.item:last-child{
+  border-bottom:0;
+}
+
+.item:hover{
+  background:#f8faff;
+}
+
+.item-name{
+  font-size:13px;
+  font-weight:700;
+}
+
+.item-code{
+  color:#89929f;
+  font-size:10px;
+  margin-top:4px;
+}
+
+.item-rate{
+  text-align:right;
+  color:var(--blue);
+  font-size:14px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+/* ================= EMPTY / ERROR ================= */
+
+.message{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:38px 20px;
+  text-align:center;
+  box-shadow:0 5px 18px rgba(12,32,60,.04);
+}
+
+.message-icon{
+  font-size:25px;
+  margin-bottom:9px;
+  color:#7d8794;
+}
+
+.message h3{
+  font-size:16px;
+}
+
+.message p{
+  color:#8a93a0;
+  font-size:12px;
+  margin-top:6px;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+  text-align:center;
+  color:#9aa2ad;
+  font-size:10px;
+  margin-top:25px;
+  letter-spacing:.4px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:600px){
+
+  .header-inner{
+    min-height:68px;
+    padding:0 14px;
+  }
+
+  .logo{
+    width:38px;
+    height:38px;
+    font-size:18px;
+  }
+
+  .company{
+    font-size:14px;
+  }
+
+  .brand{
+    font-size:9px;
+    letter-spacing:1.5px;
+  }
+
+  .status{
+    font-size:9px;
+  }
+
+  .container{
+    padding:25px 12px 35px;
+  }
+
+  .page-title{
+    margin-bottom:18px;
+  }
+
+  .page-title h1{
+    font-size:24px;
+    line-height:29px;
+  }
+
+  .page-title p{
+    font-size:12px;
+  }
+
+  .search-panel{
+    padding:12px;
+    border-radius:12px;
+  }
+
+  .search-input{
+    height:51px;
+    font-size:14px;
+  }
+
+  .filter-row{
+    grid-template-columns:1fr;
+  }
+
+  .product-header{
+    padding:17px;
+  }
+
+  .product-name{
+    font-size:19px;
+    line-height:25px;
+  }
+
+  .product-info{
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  .price-item{
+    padding:16px 17px;
+  }
+
+  .price-value{
+    font-size:21px;
+  }
+
+  .scheme{
+    padding:17px;
+  }
+
+  .scheme-table th,
+  .scheme-table td{
+    padding:10px;
+  }
+
+  .item{
+    padding:13px 15px;
+  }
+}
+
+/* ================= PRINT ================= */
+
+@media print{
+
+  body{
+    background:#fff;
+  }
+
+  .header,
+  .page-title,
+  .search-panel,
+  .footer{
+    display:none !important;
+  }
+
+  .container{
+    padding:0;
+    max-width:none;
+  }
+
+  #result{
+    margin:0;
+  }
+
+  .product,
+  .category-box{
+    box-shadow:none;
+    border:1px solid #aaa;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<div class="wrap">
+<header class="header">
+  <div class="header-inner">
 
-  <div class="card">
+    <div class="logo-area">
 
-    <header>
-      <h2>📦 Live Item Search</h2>
-      <div class="brand">SCHEME VIXEN</div>
-    </header>
-
-    <div class="row">
+      <div class="logo">V</div>
 
       <div>
-        <label>Code</label>
-        <input
-          type="number"
-          id="codeInput"
-          placeholder="1259"
-          autocomplete="off"
-        />
+        <div class="company">BHALLA SPORTS</div>
+        <div class="brand">VX VIXEN</div>
       </div>
-
-      <div>
-        <label>Name</label>
-        <input
-          type="text"
-          id="nameInput"
-          placeholder="Yoga Mat"
-          autocomplete="off"
-        />
-      </div>
-
-      <div>
-        <label>Category</label>
-        <select id="categorySelect" disabled>
-          <option>Loading…</option>
-        </select>
-      </div>
-
-      <button class="tiny" onclick="window.print()">🖨</button>
 
     </div>
 
-    <div id="status" class="status">
-      Loading data...
+    <div class="status">
+      <span class="status-dot"></span>
+      LIVE
     </div>
 
-    <div id="result" class="result" style="display:none;"></div>
+  </div>
+</header>
 
-    <div id="categoryResults" class="result" style="display:none;"></div>
+
+<main class="container">
+
+  <section class="page-title">
+    <div class="small">VX VIXEN</div>
+    <h1>Scheme & Price</h1>
+    <p>Search your product to check current pricing and scheme.</p>
+  </section>
+
+
+  <section class="search-panel">
+
+    <div class="search-box">
+
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M16 16L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+
+      <input
+        id="codeInput"
+        class="search-input"
+        type="text"
+        placeholder="Search Item Code / Product Name"
+        autocomplete="off"
+      >
+
+    </div>
+
+
+    <div class="filter-row">
+
+      <input
+        id="nameInput"
+        class="field"
+        type="text"
+        placeholder="Product Name"
+        autocomplete="off"
+      >
+
+      <select id="categoryInput" class="field">
+        <option value="">All Categories</option>
+      </select>
+
+    </div>
+
+
+    <div class="buttons">
+
+      <button
+        class="btn clear-btn"
+        onclick="clearAll()"
+      >
+        Clear
+      </button>
+
+      <button
+        class="btn print-btn"
+        onclick="window.print()"
+      >
+        Print
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <div id="result">
+
+    <div class="message">
+      <div class="message-icon">⌕</div>
+      <h3>Search an item</h3>
+      <p>Enter item code or product name to view details.</p>
+    </div>
 
   </div>
 
-</div>
+
+  <div class="footer">
+    BHALLA SPORTS • VX VIXEN
+  </div>
+
+</main>
+
 
 <script>
 
-const API_URL =
-"https://script.google.com/macros/s/AKfycbxXFCPney8rGxtPs3KAu1Tuz1oUaDbpn5FGkDChqi5-7rbZbPbJBzUnr3lfLhq6L_iR-A/exec";
+/* =====================================================
+   GOOGLE APPS SCRIPT API
+   DO NOT CHANGE
+===================================================== */
 
-const STORAGE_KEY = "SCHEME_VIXEN_DATA_V1";
+const API_URL =
+"https://script.google.com/macros/s/AKfycbxXFCPney8rGxtPs3KA1uTuz1oUaDbpn5FGkDChqi5-7rbZbPbJBzUnr3lfLhq6L_iR-A/exec";
+
+const STORAGE_KEY =
+"SCHEME_VIXEN_DATA_V1";
 
 let sheetData = [];
 let searchTimer = null;
 
-const codeInput =
-  document.getElementById("codeInput");
 
-const nameInput =
-  document.getElementById("nameInput");
+/* =====================================================
+   RUPEE
+===================================================== */
 
-const categorySelect =
-  document.getElementById("categorySelect");
+function rupee(value){
 
-const statusBox =
-  document.getElementById("status");
-
-
-function rupee(val){
-
-  if(val === null || val === undefined || val === ""){
+  if(
+    value === "" ||
+    value === null ||
+    value === undefined
+  ){
     return "-";
   }
 
-  return String(val)
-    .replace(/₹/g,"")
-    .trim();
+  const n = Number(value);
+
+  if(isNaN(n)){
+    return value;
+  }
+
+  return "₹" + n.toLocaleString("en-IN",{
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  });
 }
 
+
+/* =====================================================
+   BUILD OFFERS
+===================================================== */
 
 function buildOffers(item){
 
   const offers = [];
 
-  ["","_1","_2","_3","_4"].forEach(s => {
+  const pairs = [
+    [item[5],item[6]],
+    [item[7],item[8]],
+    [item[9],item[10]],
+    [item[11],item[12]],
+    [item[13],item[14]]
+  ];
 
-    const q = item["Qty" + s];
-    const p = item["OFFER RATE" + s];
+  pairs.forEach(function(pair){
+
+    const qty = pair[0];
+    const rate = pair[1];
 
     if(
-      q !== null &&
-      q !== undefined &&
-      q !== "" &&
-      p !== null &&
-      p !== undefined &&
-      p !== ""
+      qty !== "" &&
+      qty !== null &&
+      qty !== undefined &&
+      rate !== "" &&
+      rate !== null &&
+      rate !== undefined
     ){
+
       offers.push({
-        q:q,
-        p:p
+        qty:qty,
+        rate:rate
       });
+
     }
 
   });
@@ -337,15 +797,23 @@ function buildOffers(item){
 }
 
 
+/* =====================================================
+   LOCAL STORAGE
+===================================================== */
+
 function saveLocalData(){
 
   try{
+
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify(sheetData)
     );
+
   }catch(e){
-    console.log("Local save skipped");
+
+    console.log("Local storage error",e);
+
   }
 
 }
@@ -358,124 +826,111 @@ function loadLocalData(){
     const saved =
       localStorage.getItem(STORAGE_KEY);
 
-    if(!saved){
-      return false;
-    }
+    if(saved){
 
-    const data = JSON.parse(saved);
+      sheetData = JSON.parse(saved);
 
-    if(
-      Array.isArray(data) &&
-      data.length
-    ){
+      populateCategories();
 
-      sheetData = data;
+      autoSearch();
 
-      fillCategoryDropdown();
-
-      categorySelect.disabled = false;
-
-      statusBox.textContent =
-        "Data ready • Updating...";
-
-      return true;
     }
 
   }catch(e){
 
-    console.log("Local data error");
+    console.log("Local load error",e);
 
   }
 
-  return false;
 }
 
 
-function fetchFreshData(){
+/* =====================================================
+   FETCH FRESH DATA
+===================================================== */
 
-  fetch(API_URL, {
-    method:"GET",
-    cache:"no-store"
-  })
+async function fetchFreshData(){
 
-  .then(response => {
+  try{
 
-    if(!response.ok){
-      throw new Error("Network error");
-    }
+    const response =
+      await fetch(
+        API_URL + "?t=" + Date.now()
+      );
 
-    return response.json();
+    const data =
+      await response.json();
 
-  })
+    if(Array.isArray(data)){
 
-  .then(data => {
+      sheetData = data;
 
-    if(!Array.isArray(data)){
-      throw new Error("Invalid data");
-    }
+      saveLocalData();
 
-    sheetData = data;
+      populateCategories();
 
-    saveLocalData();
-
-    fillCategoryDropdown();
-
-    categorySelect.disabled = false;
-
-    statusBox.textContent =
-      "✓ Live data updated";
-
-    /*
-      Agar user ne pehle search kiya hua hai
-      to current search dobara apply hoga.
-    */
-
-    if(codeInput.value.trim()){
       autoSearch();
-    }
-    else if(nameInput.value.trim()){
-      searchByName();
-    }
-
-  })
-
-  .catch(error => {
-
-    console.log(error);
-
-    if(sheetData.length){
-
-      statusBox.textContent =
-        "✓ Saved data • Live update unavailable";
-
-    }else{
-
-      statusBox.textContent =
-        "❌ Unable to load data";
-
-      categorySelect.innerHTML =
-        "<option>Unable to load</option>";
 
     }
 
-  });
+  }catch(error){
+
+    console.log("API error:",error);
+
+    if(!sheetData.length){
+
+      document.getElementById("result").innerHTML = `
+
+        <div class="message">
+
+          <div class="message-icon">⚠</div>
+
+          <h3>Unable to load data</h3>
+
+          <p>
+            Please check your internet connection and try again.
+          </p>
+
+        </div>
+
+      `;
+
+    }
+
+  }
 
 }
 
 
-function fillCategoryDropdown(){
+/* =====================================================
+   CATEGORY DROPDOWN
+===================================================== */
 
-  const categories =
-    [...new Set(
+function populateCategories(){
+
+  const select =
+    document.getElementById("categoryInput");
+
+  const current =
+    select.value;
+
+  const categories = [
+    ...new Set(
       sheetData
-        .map(item => item["CATEGORY"])
+        .map(function(row){
+          return row[1];
+        })
         .filter(Boolean)
-    )].sort();
+        .map(function(x){
+          return String(x).trim();
+        })
+    )
+  ].sort();
 
-  categorySelect.innerHTML =
-    '<option value="">All categories</option>';
+  select.innerHTML =
+    `<option value="">All Categories</option>`;
 
-  categories.forEach(category => {
+  categories.forEach(function(category){
 
     const option =
       document.createElement("option");
@@ -483,344 +938,518 @@ function fillCategoryDropdown(){
     option.value = category;
     option.textContent = category;
 
-    categorySelect.appendChild(option);
+    select.appendChild(option);
 
   });
 
+  if(categories.includes(current)){
+    select.value = current;
+  }
+
 }
 
+
+/* =====================================================
+   RENDER ITEM
+===================================================== */
 
 function renderItem(item){
 
   const offers =
     buildOffers(item);
 
-  const result =
-    document.getElementById("result");
+  let offerHTML = "";
 
-  result.style.display = "block";
+  if(offers.length){
 
-  document.getElementById(
-    "categoryResults"
-  ).style.display = "none";
+    offerHTML = `
 
-  result.innerHTML = `
+      <section class="scheme">
 
-    <div class="hero">
+        <div class="scheme-title">
 
-      <div>
+          <h2>Special Offer</h2>
 
-        <div class="item-name">
-          ${item["ITEM NAME"] || "-"}
+          <span>SCHEME RATE</span>
+
         </div>
 
-        <div class="meta">
-          Code: ${item["CODE"] || "-"}
-          •
-          ${item["CATEGORY"] || "-"}
+
+        <table class="scheme-table">
+
+          <thead>
+
+            <tr>
+              <th>Quantity</th>
+              <th>Offer Rate</th>
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            ${
+              offers.map(function(o){
+
+                return `
+
+                  <tr>
+                    <td>${o.qty}</td>
+                    <td>${rupee(o.rate)}</td>
+                  </tr>
+
+                `;
+
+              }).join("")
+            }
+
+          </tbody>
+
+        </table>
+
+      </section>
+
+    `;
+
+  }else{
+
+    offerHTML = `
+
+      <section class="scheme">
+
+        <div class="scheme-title">
+          <h2>Special Offer</h2>
         </div>
 
-      </div>
+        <p style="
+          color:#8a93a0;
+          font-size:12px;
+        ">
+          No special offer available.
+        </p>
 
-      <div>
+      </section>
 
-        <div class="dp">
-          ₹ ${rupee(item["DP"])}
+    `;
+
+  }
+
+
+  document.getElementById("result").innerHTML = `
+
+    <article class="product">
+
+      <div class="product-header">
+
+        <div class="product-label">
+          ${item[1] || "PRODUCT"}
         </div>
 
-        <div
-          class="meta"
-          style="font-weight:700;color:#16a34a;"
-        >
-          MRP: ₹ ${rupee(item["MRP"])}
+        <div class="product-name">
+          ${item[2] || "-"}
         </div>
 
-      </div>
+        <div class="product-info">
 
-    </div>
-
-    <div class="offer-title">
-      🔥 Special Offers
-    </div>
-
-    <div class="offers">
-
-      ${
-        offers.length
-
-        ?
-
-        offers.map(o => `
-
-          <span class="offer-pill">
-            ${o.q}
-            →
-            <strong>
-              ₹ ${rupee(o.p)}
-            </strong>
+          <span>
+            Code:
+            <b>${item[0] || "-"}</b>
           </span>
 
-        `).join("")
+          <span>
+            Category:
+            <b>${item[1] || "-"}</b>
+          </span>
 
-        :
+        </div>
 
-        `<span class="meta">
-          No offer
-        </span>`
-      }
+      </div>
 
-    </div>
+
+      <div class="price-section">
+
+        <div class="price-item">
+
+          <div class="price-label">
+            Dealer Price
+          </div>
+
+          <div class="price-value dp">
+            ${rupee(item[3])}
+          </div>
+
+        </div>
+
+
+        <div class="price-item">
+
+          <div class="price-label">
+            MRP
+          </div>
+
+          <div class="price-value mrp">
+            ${rupee(item[4])}
+          </div>
+
+        </div>
+
+      </div>
+
+
+      ${offerHTML}
+
+    </article>
+
   `;
+
 }
 
 
-function autoSearch(){
+/* =====================================================
+   SEARCH CODE
+===================================================== */
 
-  const code =
-    codeInput.value.trim();
+function searchByCode(){
 
-  if(!code){
-    clearAll();
-    return;
-  }
-
-  const item =
-    sheetData.find(
-      row =>
-        String(row["CODE"]).trim() === code
-    );
-
-  if(!item){
-    showNotFound();
-    return;
-  }
-
-  renderItem(item);
-}
-
-
-function searchByName(){
-
-  const name =
-    nameInput.value
+  const value =
+    document
+      .getElementById("codeInput")
+      .value
       .trim()
       .toLowerCase();
 
-  if(!name){
+  if(!value){
+
+    autoSearch();
     return;
+
   }
 
   const item =
-    sheetData.find(row =>
-      String(row["ITEM NAME"] || "")
-        .toLowerCase()
-        .includes(name)
-    );
+    sheetData.find(function(row){
 
-  if(!item){
+      return String(row[0] || "")
+        .toLowerCase() === value;
+
+    });
+
+
+  if(item){
+
+    renderItem(item);
+
+  }else{
+
     showNotFound();
-    return;
+
   }
 
-  codeInput.value =
-    item["CODE"];
-
-  renderItem(item);
 }
 
+
+/* =====================================================
+   SEARCH NAME
+===================================================== */
+
+function searchByName(){
+
+  const value =
+    document
+      .getElementById("nameInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  if(!value){
+
+    autoSearch();
+    return;
+
+  }
+
+  const item =
+    sheetData.find(function(row){
+
+      return String(row[2] || "")
+        .toLowerCase()
+        .includes(value);
+
+    });
+
+
+  if(item){
+
+    renderItem(item);
+
+  }else{
+
+    showNotFound();
+
+  }
+
+}
+
+
+/* =====================================================
+   SEARCH CATEGORY
+===================================================== */
 
 function searchByCategory(){
 
   const category =
-    categorySelect.value;
-
-  const box =
-    document.getElementById(
-      "categoryResults"
-    );
-
-  document.getElementById(
-    "result"
-  ).style.display = "none";
+    document
+      .getElementById("categoryInput")
+      .value
+      .trim()
+      .toLowerCase();
 
   if(!category){
 
-    box.style.display = "none";
-
+    autoSearch();
     return;
+
   }
 
+
   const items =
-    sheetData.filter(
-      item =>
-        item["CATEGORY"] === category
-    );
+    sheetData.filter(function(row){
 
-  box.style.display = "block";
+      return String(row[1] || "")
+        .toLowerCase() === category;
 
-  box.innerHTML = items.length
+    });
 
-    ?
 
-    items.map(item => {
+  if(!items.length){
 
-      const offers =
-        buildOffers(item);
+    showNotFound();
+    return;
 
-      return `
+  }
 
-        <div
-          class="hero"
-          style="margin-bottom:8px"
-        >
 
-          <div>
+  document.getElementById("result").innerHTML = `
 
-            <div class="item-name">
-              ${item["ITEM NAME"] || "-"}
-            </div>
+    <section class="category-box">
 
-            <div class="meta">
-              Code: ${item["CODE"] || "-"}
-            </div>
+      <div class="category-head">
 
-          </div>
+        <span>Category</span>
 
-          <div>
+        <h2>
+          ${category.toUpperCase()}
+        </h2>
 
-            <div class="dp">
-              ₹ ${rupee(item["DP"])}
-            </div>
+      </div>
+
+
+      ${
+        items.map(function(item){
+
+          return `
 
             <div
-              class="meta"
-              style="font-weight:700;color:#16a34a;"
+              class="item"
+              onclick="selectItem('${String(item[0]).replace(/'/g,"\\'")}')"
             >
-              MRP: ₹ ${rupee(item["MRP"])}
+
+              <div>
+
+                <div class="item-name">
+                  ${item[2] || "-"}
+                </div>
+
+                <div class="item-code">
+                  CODE: ${item[0] || "-"}
+                </div>
+
+              </div>
+
+
+              <div class="item-rate">
+                ${rupee(item[3])}
+              </div>
+
             </div>
 
-          </div>
+          `;
 
-        </div>
+        }).join("")
+      }
 
-        <div class="offers">
+    </section>
 
-          ${
-            offers.length
+  `;
 
-            ?
+}
 
-            offers.map(o => `
 
-              <span class="offer-pill">
-                ${o.q}
-                →
-                <strong>
-                  ₹ ${rupee(o.p)}
-                </strong>
-              </span>
+/* =====================================================
+   SELECT ITEM
+===================================================== */
 
-            `).join("")
+function selectItem(code){
 
-            :
+  const item =
+    sheetData.find(function(row){
 
-            `<span class="meta">
-              No offer
-            </span>`
-          }
+      return String(row[0]) === String(code);
+
+    });
+
+
+  if(item){
+
+    renderItem(item);
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  }
+
+}
+
+
+/* =====================================================
+   AUTO SEARCH
+===================================================== */
+
+function autoSearch(){
+
+  clearTimeout(searchTimer);
+
+  searchTimer = setTimeout(function(){
+
+    const code =
+      document
+        .getElementById("codeInput")
+        .value
+        .trim();
+
+    const name =
+      document
+        .getElementById("nameInput")
+        .value
+        .trim();
+
+    const category =
+      document
+        .getElementById("categoryInput")
+        .value
+        .trim();
+
+
+    if(code){
+
+      searchByCode();
+      return;
+
+    }
+
+    if(name){
+
+      searchByName();
+      return;
+
+    }
+
+    if(category){
+
+      searchByCategory();
+      return;
+
+    }
+
+
+    if(sheetData.length){
+
+      document.getElementById("result").innerHTML = `
+
+        <div class="message">
+
+          <div class="message-icon">⌕</div>
+
+          <h3>Search an item</h3>
+
+          <p>
+            Enter item code or product name to view details.
+          </p>
 
         </div>
 
       `;
 
-    }).join(
-      "<hr style='border-color:#e5e7eb;margin:10px 0'/>"
-    )
+    }
 
-    :
+  },180);
 
-    `<div class="loading">
-      No items in this category
-    </div>`;
 }
 
+
+/* =====================================================
+   CLEAR
+===================================================== */
 
 function clearAll(){
 
-  document.getElementById(
-    "result"
-  ).style.display = "none";
+  document.getElementById("codeInput").value = "";
+  document.getElementById("nameInput").value = "";
+  document.getElementById("categoryInput").value = "";
 
-  document.getElementById(
-    "categoryResults"
-  ).style.display = "none";
+  autoSearch();
 
 }
 
 
+/* =====================================================
+   NOT FOUND
+===================================================== */
+
 function showNotFound(){
 
-  const result =
-    document.getElementById("result");
+  document.getElementById("result").innerHTML = `
 
-  result.style.display = "block";
+    <div class="message">
 
-  result.innerHTML = `
-    <div class="loading">
-      ❌ Item not found
+      <div class="message-icon">⌕</div>
+
+      <h3>Item not found</h3>
+
+      <p>
+        Please check the item code or product name.
+      </p>
+
     </div>
+
   `;
 
 }
 
 
-codeInput.addEventListener(
-  "input",
-  () => {
+/* =====================================================
+   EVENTS
+===================================================== */
 
-    clearTimeout(searchTimer);
+document
+  .getElementById("codeInput")
+  .addEventListener("input",autoSearch);
 
-    searchTimer =
-      setTimeout(autoSearch,100);
+document
+  .getElementById("nameInput")
+  .addEventListener("input",autoSearch);
 
-  }
-);
-
-
-nameInput.addEventListener(
-  "input",
-  () => {
-
-    clearTimeout(searchTimer);
-
-    searchTimer =
-      setTimeout(searchByName,120);
-
-  }
-);
+document
+  .getElementById("categoryInput")
+  .addEventListener("change",autoSearch);
 
 
-categorySelect.addEventListener(
-  "change",
-  searchByCategory
-);
-
-
-/*
-  IMPORTANT:
-  Pehle saved data load karo.
-  Isse repeat users ko app almost
-  immediately usable milta hai.
-*/
+/* =====================================================
+   START APP
+===================================================== */
 
 loadLocalData();
-
-
-/*
-  Saath mein fresh Google Sheet data
-  background mein fetch karo.
-*/
-
 fetchFreshData();
 
 </script>
